@@ -1,19 +1,11 @@
-"use strict";
+import { Point } from "./point.js"
 
-
-class Point {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
-let canvas;
-let context;
-let point = new Point(25, 20);;
+let canvas: any;
+let context: any;
+let point = new Point(25, 20);
 let vel = new Point(1, 1);
 let color = "#ff8080"
-let socket;
+let socket: any;
 window.onload = init;
 
 function init() {
@@ -27,11 +19,11 @@ function init() {
     window.requestAnimationFrame(gameLoop);
 }
 
-function onmessage(event) {
+function onmessage(event: any) {
     color = event.data;
 }
 
-function gameLoop(timeStamp) {
+function gameLoop(timeStamp: number) {
     update();
     draw();
 
@@ -42,7 +34,7 @@ function gameLoop(timeStamp) {
 function update() {
     point.x += vel.x;
     point.y += vel.y;
-    if (point.x > canvas.width -10 || point.x < 0){
+    if (point.x > canvas.width - 10 || point.x < 0) {
         vel.x = -vel.x;
         socket.send("donk");
     }
