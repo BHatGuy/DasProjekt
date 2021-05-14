@@ -6,11 +6,12 @@ TS_FILES := $(wildcard $(CLIENT_DIR)/*.ts)
 JS_FILES := $(patsubst $(CLIENT_DIR)/%.ts,$(BUILD_DIR)/%.js,$(TS_FILES))
 
 
-client: $(JS_FILES) $(BUILD_DIR)/index.html tsconfig.json
+client: $(JS_FILES) $(BUILD_DIR)/index.html $(BUILD_DIR)/styles.css tsconfig.json
 
 $(BUILD_DIR)/%.js: $(TS_FILES)
 	$(TSC)
-
+$(BUILD_DIR)/styles.css: $(CLIENT_DIR)/styles.css
+	cp $< $@
 $(BUILD_DIR)/index.html: $(CLIENT_DIR)/index.html
 	cp $< $@
 	

@@ -1,51 +1,60 @@
-import { Point } from "./point.js"
+import {GameObject} from "GameObject.js"
 
-let canvas: any;
-let context: any;
-let point = new Point(25, 20);
-let vel = new Point(1, 1);
-let color = "#ff8080"
-let socket: any;
+let canvas: HTMLCanvasElement;
+let context: CanvasRenderingContext2D;
+let socket: WebSocket;
+let gameObjects: GameObject[] = [];
+let messageQueue: MessageEvent<any>[] = [];
+let lastFrame: number;
 window.onload = init;
 
+
 function init() {
-    canvas = document.getElementById('canvas');
-    context = canvas.getContext('2d');
+    canvas = document.getElementById('canvas') as HTMLCanvasElement;
+    context = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
     socket = new WebSocket("ws://localhost:6789");
-    socket.onmessage = onmessage;
+    socket.onmessage = receive;
 
     // Start the first frame request
+    lastFrame = performance.now();
     window.requestAnimationFrame(gameLoop);
 }
 
-function onmessage(event: any) {
-    color = event.data;
+function receive(msg: MessageEvent<any>) {
+    console.log(msg.data);
+    messageQueue.push(msg);
 }
 
 function gameLoop(timeStamp: number) {
-    update();
-    draw();
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    let delta = timeStamp - lastFrame;
+    lastFrame = timeStamp;
+    
+    // receive:
+    while(messageQueue.length > 0){
+        let msg = messageQueue.shift() as MessageEvent<any>;
+        for (const go of gameObjects) {
+            go.receive(msg)
+        }    
+    }
+
+    // update: 
+    for (const go of gameObjects) {
+        go.update(delta);
+    }
+
+    // draw:
+
+    for (const go of gameObjects) {
+        go.draw(context);
+    }
 
     // Keep requesting new frames
     window.requestAnimationFrame(gameLoop);
 }
 
-function update() {
-    point.x += vel.x;
-    point.y += vel.y;
-    if (point.x > canvas.width - 10 || point.x < 0) {
-        vel.x = -vel.x;
-        socket.send("donk");
-    }
-    if (point.y > canvas.height - 10 || point.y < 0) {
-        vel.y = -vel.y;
-        socket.send("donk");
-    }
-}
 
-function draw() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = color;
-    context.fillRect(point.x, point.y, 10, 10);
-}
