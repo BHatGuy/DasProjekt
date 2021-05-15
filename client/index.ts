@@ -1,4 +1,5 @@
-import {GameObject} from "GameObject"
+import {GameObject} from "./GameObject"
+import { Room1 } from "./Room1";
 
 let canvas: HTMLCanvasElement;
 let context: CanvasRenderingContext2D;
@@ -19,6 +20,8 @@ function init() {
 
     socket = new WebSocket("ws://localhost:6789");
     socket.onmessage = receive;
+
+    gameObjects.push(new Room1());
 
     // Start the first frame request
     lastFrame = performance.now();
@@ -51,7 +54,7 @@ function gameLoop(timeStamp: number) {
     // draw:
 
     for (const go of gameObjects) {
-        go.draw(context);
+        go.draw(context, canvas);
     }
 
     // Keep requesting new frames
