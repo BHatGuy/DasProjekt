@@ -1,4 +1,4 @@
-import {GameObject} from "GameObject.js"
+import {GameObject} from "GameObject"
 
 let canvas: HTMLCanvasElement;
 let context: CanvasRenderingContext2D;

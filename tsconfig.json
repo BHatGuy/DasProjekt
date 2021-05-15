@@ -3,9 +3,9 @@
     "strict": true,
     "alwaysStrict": true,
     "module": "ESNext",
-    "outDir": "build/"
+    "outDir": "build"
   },
   "include": [
-    "client/*.ts"
+    "client/"
   ]
 }
