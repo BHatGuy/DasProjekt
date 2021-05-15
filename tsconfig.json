@@ -2,10 +2,11 @@
   "compilerOptions": {
     "strict": true,
     "alwaysStrict": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     "outDir": "build"
   },
   "include": [
-    "client/"
+    "client/",
+    "build/"
   ]
 }
