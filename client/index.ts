@@ -1,5 +1,6 @@
-import {GameObject} from "./GameObject"
+import { GameObject } from "./GameObject"
 import { Room1 } from "./Room1";
+import { FPS } from "./FPS"
 
 let canvas: HTMLCanvasElement;
 let context: CanvasRenderingContext2D;
@@ -22,6 +23,7 @@ function init() {
     socket.onmessage = receive;
 
     gameObjects.push(new Room1());
+    gameObjects.push(new FPS());
 
     // Start the first frame request
     lastFrame = performance.now();
@@ -37,13 +39,13 @@ function gameLoop(timeStamp: number) {
     context.clearRect(0, 0, canvas.width, canvas.height);
     let delta = timeStamp - lastFrame;
     lastFrame = timeStamp;
-    
+
     // receive:
-    while(messageQueue.length > 0){
+    while (messageQueue.length > 0) {
         let msg = messageQueue.shift() as MessageEvent<any>;
         for (const go of gameObjects) {
             go.receive(msg)
-        }    
+        }
     }
 
     // update: 
