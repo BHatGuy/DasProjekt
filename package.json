@@ -7,7 +7,7 @@
     }
   },
   "scripts": {
-    "build": "babel --out-file build/bundle.js client/index.ts && cp client/static/* build/",
+    "build": "npm run check-types && babel --out-file build/bundle.js client/index.ts && cp client/static/* build/",
     "check-types": "tsc",
     "serve": "serve build/",
     "backend": "python server/server.py",

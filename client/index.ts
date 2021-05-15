@@ -6,15 +6,16 @@ let socket: WebSocket;
 let gameObjects: GameObject[] = [];
 let messageQueue: MessageEvent<any>[] = [];
 let lastFrame: number;
-window.onload = init;
 
+// Set listeners for window
+window.onload = init;
+window.onresize = onresize;
 
 function init() {
     canvas = document.getElementById('canvas') as HTMLCanvasElement;
     context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    onresize();
 
     socket = new WebSocket("ws://localhost:6789");
     socket.onmessage = receive;
@@ -55,6 +56,11 @@ function gameLoop(timeStamp: number) {
 
     // Keep requesting new frames
     window.requestAnimationFrame(gameLoop);
+}
+
+function onresize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 
 
