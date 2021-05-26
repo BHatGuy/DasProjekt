@@ -8,3 +8,10 @@ Backend ausführen:
 
 Alles laufen lassen und bei Änderungen neu bauen:
 ``` npm start ```
+
+
+# TODO
+- Geometrien laden
+- Gameobject / Clickable
+- Nachrichten durchstellen
+- Popup
