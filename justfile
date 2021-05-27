@@ -17,7 +17,7 @@ backend:
 
 watch: 
     just serve &
-    watchexec -i build -e ts,html,css just build
+    watchexec --on-busy-update restart -i build -e ts,html,css just build
 
 clean:
     rm -rf build/

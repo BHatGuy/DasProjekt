@@ -15,3 +15,4 @@ Alles laufen lassen und bei Änderungen neu bauen:
 - Gameobject / Clickable
 - Nachrichten durchstellen
 - Popup
+- relative Coordinaten
