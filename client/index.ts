@@ -10,6 +10,10 @@ window.onload = init;
 
 function init() {
     let canvas = document.getElementById('canvas') as HTMLCanvasElement;
+    canvas.height = window.innerHeight - 100;
+    canvas.width = (window.innerHeight - 100) * (4/3);
+
+
     let socket = new WebSocket("ws://localhost:6789");
     game = new Game(canvas, socket);
 

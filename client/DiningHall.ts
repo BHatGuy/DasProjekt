@@ -10,8 +10,10 @@ export class DiningHall extends Room {
     }
 
     onclick(ev: MouseEvent) {
-        console.log(ev.x + " " + ev.y);
-        if (ev.x > 580 && ev.x < 700 && ev.y > 50 && ev.y < 275) {
+        let realx = ev.x / this.xfactor;
+        let realy = ev.y / this.yfactor;
+
+        if (realx > 1740 && realx < 2070 && realy > 160 && realy < 820) {
             this.game.nextRoom(RoomAlias.Cockpit);
         }
     }
