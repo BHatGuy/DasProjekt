@@ -10,8 +10,8 @@ export class DiningHall extends Room {
     }
 
     onclick(ev: MouseEvent) {
-        let realx = ev.x / this.xfactor;
-        let realy = ev.y / this.yfactor;
+        let realx = ev.offsetX / this.xfactor;
+        let realy = ev.offsetY / this.yfactor;
 
         if (realx > 1740 && realx < 2070 && realy > 160 && realy < 820) {
             this.game.nextRoom(RoomAlias.Cockpit);
