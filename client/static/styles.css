@@ -1,12 +1,13 @@
 * { margin: 0; padding: 0;}
 
 body, html {
-    height:100%;
     background-color: grey;
 }
 
 #canvas {
     display: block;
-    margin: 20px auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vh;
     border: 3px solid black;
 }
