@@ -1,48 +1,39 @@
-import { Game, Room } from "./Game";
-import { GameObject } from "./GameObject";
+import { Game } from "./Game";
+import { Room, RoomAlias } from "./Room";
 
-export class Cockpit implements GameObject {
-    imgBckgrnd: CanvasImageSource;
+
+export class Cockpit extends Room {
     imgLamp: CanvasImageSource;
-    game: Game;
     lampCycle = 0;
     lamp = false;
 
-    constructor(canvas: HTMLCanvasElement, game: Game) {
-        var img = document.createElement("img");
-        img.setAttribute("src", "Cockpit.png");
-        this.imgBckgrnd = img as CanvasImageSource;
-
-        var img2 = document.createElement("img");
+    constructor(game: Game, canvas: HTMLCanvasElement) {
+        super(game, canvas, "Cockpit.png");
+        let img2 = document.createElement("img");
         img2.setAttribute("src", "Cockpit_nurLampe.png");
         this.imgLamp = img2 as CanvasImageSource;
-
-        this.game = game;
-
     }
+
     draw(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement): void {
-        ctx.drawImage(this.imgBckgrnd, 0, 0, canvas.width, canvas.height);
+        super.draw(ctx, canvas);
         if (this.lamp) {
-            ctx.drawImage(this.imgLamp, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(this.imgLamp, 190 * this.xfactor, 0, this.imgLamp.width as number * this.xfactor, this.imgLamp.height as number * this.yfactor);
         }
     }
 
     update(delta: number): void {
         this.lampCycle += delta;
-        if (this.lampCycle > 1000) {
+        if (this.lampCycle > 750) {
             this.lamp = !this.lamp;
             this.lampCycle = 0;
         }
     }
 
-    receive(msg: MessageEvent<any>): void {
-
-    }
 
     onclick(ev: MouseEvent) {
         console.log(ev.x + " " + ev.y);
         if (ev.x < 80) {
-            this.game.nextRoom(Room.DiningHall);
+            this.game.nextRoom(RoomAlias.DiningHall);
         }
     }
 }

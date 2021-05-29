@@ -1,18 +1,16 @@
 import { DiningHall } from "./DiningHall";
 import { GameObject } from "./GameObject";
 import { Cockpit } from "./Cockpit";
+import { Room, RoomAlias } from "./Room";
 
-export enum Room {
-    DiningHall,
-    Cockpit,
-}
+
 
 export class Game {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D;
     messageQueue: MessageEvent<any>[] = [];
     socket: WebSocket;
-    rooms: Record<Room, GameObject>;
+    rooms: Record<RoomAlias, Room>;
     currentRoom: GameObject;
 
     constructor(canvas: HTMLCanvasElement, socket: WebSocket) {
@@ -21,10 +19,10 @@ export class Game {
         this.socket = socket;
         this.socket.onmessage = this.receive;
         this.rooms = {
-            [Room.DiningHall]: new DiningHall(canvas, this),
-            [Room.Cockpit]: new Cockpit(canvas, this),
+            [RoomAlias.DiningHall]: new DiningHall(this, canvas),
+            [RoomAlias.Cockpit]: new Cockpit(this, canvas),
         }
-        this.currentRoom = this.rooms[Room.DiningHall];
+        this.currentRoom = this.rooms[RoomAlias.DiningHall];
         canvas.onclick = (e: MouseEvent) => { this.onclick(e); };
 
     }
@@ -57,7 +55,7 @@ export class Game {
         this.currentRoom.onclick(ev);
     }
 
-    nextRoom(r: Room) {
+    nextRoom(r: RoomAlias) {
         this.currentRoom = this.rooms[r]
     }
 }
