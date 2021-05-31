@@ -11,7 +11,7 @@ export class Game {
     messageQueue: MessageEvent<any>[] = [];
     socket: WebSocket;
     rooms: Record<RoomAlias, Room>;
-    currentRoom: GameObject;
+    currentRoom: Room;
 
     constructor(canvas: HTMLCanvasElement, socket: WebSocket) {
         this.canvas = canvas;
@@ -23,8 +23,8 @@ export class Game {
             [RoomAlias.Cockpit]: new Cockpit(this, canvas),
         }
         this.currentRoom = this.rooms[RoomAlias.DiningHall];
+        this.currentRoom.activate();
         canvas.onclick = (e: MouseEvent) => { this.onclick(e); };
-
     }
 
 
@@ -56,6 +56,8 @@ export class Game {
     }
 
     nextRoom(r: RoomAlias) {
+        this.currentRoom.deactivate();
         this.currentRoom = this.rooms[r]
+        this.currentRoom.activate();
     }
 }

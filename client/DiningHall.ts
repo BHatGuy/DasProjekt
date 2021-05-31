@@ -5,15 +5,21 @@ import { Room, RoomAlias } from "./Room";
 
 export class DiningHall extends Room {
 
-    overlay: HTMLDivElement;
 
     constructor(game: Game, canvas: HTMLCanvasElement) {
         super(game, canvas, "diningHall.png");
-        this.overlay = document.getElementById("overlay") as HTMLDivElement;
-        this.overlay.onclick = (e: MouseEvent) => { this.overlay.style.display = "none"; };
-        this.overlay.innerHTML = "<img src=\"Cockpit_nurLampe.png\"></img>"
     }
 
+    activate() {
+        super.activate();
+        this.overlay.innerHTML = "<img src=\"Cockpit_nurLampe.png\"></img>";
+        this.overlay.onclick = (e: MouseEvent) => { this.overlay.style.display = "none"; };
+    }
+
+    deactivate() {
+        this.overlay.innerHTML = "";
+        this.overlay.onclick = null;
+    }
 
     onclick(ev: MouseEvent) {
         let realx = ev.offsetX / this.xfactor;

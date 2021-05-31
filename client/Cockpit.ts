@@ -14,6 +14,17 @@ export class Cockpit extends Room {
         this.imgLamp = img2 as CanvasImageSource;
     }
 
+    activate(){
+        super.activate();
+        this.canvas.onmousemove = (e: MouseEvent) => { this.mousemove(e); };
+    }
+
+    deactivate() {
+        super.activate();
+        this.canvas.onmousemove = null;
+        this.canvas.style.cursor = "initial";
+    }
+
     draw(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement): void {
         super.draw(ctx, canvas);
         if (this.lamp) {
@@ -26,6 +37,17 @@ export class Cockpit extends Room {
         if (this.lampCycle > 750) {
             this.lamp = !this.lamp;
             this.lampCycle = 0;
+        }
+    }
+
+    mousemove(ev: MouseEvent ){
+        let realx = ev.offsetX / this.xfactor;
+        let realy = ev.offsetY / this.yfactor;
+
+        if (realx < 260) {
+            this.canvas.style.cursor = "pointer";
+        } else {
+            this.canvas.style.cursor = "initial";
         }
     }
 

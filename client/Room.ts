@@ -9,6 +9,9 @@ export enum RoomAlias {
 export class Room implements GameObject {
     protected imgBckgrnd: CanvasImageSource;
     protected game: Game;
+    protected canvas: HTMLCanvasElement;
+    overlay: HTMLDivElement;
+
 
     protected xfactor: number;
     protected yfactor: number;
@@ -19,11 +22,17 @@ export class Room implements GameObject {
         this.imgBckgrnd = img as CanvasImageSource;
 
         this.game = game;
+        this.canvas = canvas;
+        this.overlay = document.getElementById("overlay") as HTMLDivElement;
 
         this.xfactor = canvas.width / (this.imgBckgrnd.width as number);
         this.yfactor = canvas.height / (this.imgBckgrnd.height as number);
-
     }
+
+    activate() { }
+
+    deactivate() { }
+
     draw(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement): void {
         ctx.drawImage(this.imgBckgrnd, 0, 0, this.imgBckgrnd.width as number * this.xfactor, this.imgBckgrnd.height as number * this.yfactor);
     }
