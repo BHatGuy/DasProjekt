@@ -25,10 +25,11 @@ export class Cockpit extends Room {
         this.canvas.style.cursor = "initial";
     }
 
-    draw(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement): void {
-        super.draw(ctx, canvas);
+    draw(canvas: HTMLCanvasElement): void {
+        super.draw(canvas);
+        let ctx = canvas.getContext("2d");
         if (this.lamp) {
-            ctx.drawImage(this.imgLamp, 190 * this.xfactor, 0, this.imgLamp.width as number * this.xfactor, this.imgLamp.height as number * this.yfactor);
+            ctx?.drawImage(this.imgLamp, 190 * this.xfactor, 0, this.imgLamp.width as number * this.xfactor, this.imgLamp.height as number * this.yfactor);
         }
     }
 

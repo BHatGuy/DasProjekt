@@ -29,7 +29,6 @@ export class DiningHall extends Room {
             this.game.nextRoom(RoomAlias.Cockpit);
         }
         if (realx > 2150 && realx < 2330 && realy > 155 && realy < 420) {
-            console.log("save!");
             this.overlay.style.display = "block";
         }
     }

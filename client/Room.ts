@@ -33,8 +33,9 @@ export class Room implements GameObject {
 
     deactivate() { }
 
-    draw(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement): void {
-        ctx.drawImage(this.imgBckgrnd, 0, 0, this.imgBckgrnd.width as number * this.xfactor, this.imgBckgrnd.height as number * this.yfactor);
+    draw(canvas: HTMLCanvasElement): void {
+        let ctx = canvas.getContext("2d");
+        ctx?.drawImage(this.imgBckgrnd, 0, 0, this.imgBckgrnd.width as number * this.xfactor, this.imgBckgrnd.height as number * this.yfactor);
     }
 
     update(delta: number): void {

@@ -47,7 +47,7 @@ export class Game {
         this.currentRoom.update(delta);
 
         // draw:
-        this.currentRoom.draw(this.context, this.canvas);
+        this.currentRoom.draw(this.canvas);
 
     }
 
