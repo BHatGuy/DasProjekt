@@ -24,5 +24,5 @@ clean:
 
 # this does not deploy the backend currently
 deploy: clean build
-    scp  -r build/ root@167.172.172.196:/var/www/html
+    scp  -r build/ root@dasprojekt.ddnss.de:/var/www/html
 #TODO deploy backend here
