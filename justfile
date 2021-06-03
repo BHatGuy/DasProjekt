@@ -5,6 +5,7 @@ all:
 build: check-types
     browserify client/index.ts -p [ tsify --noImplicitAny ] -o build/bundle.js 
     cp client/static/* build/
+    -rm build/*tmp*
 
 check-types:
     tsc --noEmit
@@ -24,5 +25,5 @@ clean:
 
 # this does not deploy the backend currently
 deploy: clean build
-    scp  -r build/ root@dasprojekt.ddnss.de:/var/www/html
+    scp  -r build/* root@dasprojekt.ddnss.de:/var/www/html
 #TODO deploy backend here
