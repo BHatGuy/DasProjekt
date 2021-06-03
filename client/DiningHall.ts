@@ -10,7 +10,9 @@ export class DiningHall extends Room {
     imgDisk3: CanvasImageSource;
     imgThingy: CanvasImageSource;
     popup: HTMLCanvasElement | null = null;
-
+    deg1 = 0;
+    deg2 = 0;
+    deg3 = 0;
 
     constructor(game: Game, canvas: HTMLCanvasElement) {
         super(game, canvas, "diningHall.png");
@@ -42,6 +44,8 @@ export class DiningHall extends Room {
         this.popup.height = window.innerHeight * 0.8;
         this.popup.width = (window.innerHeight * 0.8) * (4 / 3)
 
+
+
         //this.popup.src = "Safe.png";
         this.popup.style.display = "block";
         //this.popup.style.height = "80%";
@@ -56,12 +60,37 @@ export class DiningHall extends Room {
         super.draw(canvas);
         if (this.popup) {
             let ctx = this.popup.getContext("2d") as CanvasRenderingContext2D;
+            let pxfactor = this.popup.width / (this.imgSafe.width as number);
+            let pyfactor = this.popup.height / (this.imgSafe.height as number);
             ctx.drawImage(this.imgSafe, 0, 0, this.popup.width, this.popup.height);
+            // TODO: Refactor this
+            ctx.translate(pxfactor * 978, pyfactor * 946);
+            ctx.rotate(this.deg1 * Math.PI / 180);
+            ctx.translate(-pxfactor * 978, -pyfactor * 946);
             ctx.drawImage(this.imgDisk1, 0, 0, this.popup.width, this.popup.height);
+            ctx.resetTransform();
+
+            ctx.translate(pxfactor * 978, pyfactor * 946);
+            ctx.rotate(this.deg2 * Math.PI / 180);
+            ctx.translate(-pxfactor * 978, -pyfactor * 946);
             ctx.drawImage(this.imgDisk2, 0, 0, this.popup.width, this.popup.height);
+            ctx.resetTransform();
+
+            ctx.translate(pxfactor * 978, pyfactor * 946);
+            ctx.rotate(this.deg3 * Math.PI / 180);
+            ctx.translate(-pxfactor * 978, -pyfactor * 946);
             ctx.drawImage(this.imgDisk3, 0, 0, this.popup.width, this.popup.height);
+            ctx.resetTransform();
+
             ctx.drawImage(this.imgThingy, 0, 0, this.popup.width, this.popup.height);
         }
+    }
+
+    update(delta: number) {
+        super.update(delta);
+        this.deg1 += delta * 0.04;
+        this.deg2 += delta * -0.04;
+        this.deg3 += delta * 0.03;
     }
 
     deactivate() {
