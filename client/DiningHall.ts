@@ -10,9 +10,10 @@ export class DiningHall extends Room {
     imgDisk3: CanvasImageSource;
     imgThingy: CanvasImageSource;
     popup: HTMLCanvasElement | null = null;
-    deg1 = 0;
-    deg2 = 0;
-    deg3 = 0;
+    angles = [DiningHall.digitToAngle(0), DiningHall.digitToAngle(0), DiningHall.digitToAngle(0)];
+    goals = [DiningHall.digitToAngle(0), DiningHall.digitToAngle(0), DiningHall.digitToAngle(0)];
+    combi = [0, 0, 0];
+    index = 0;
 
     constructor(game: Game, canvas: HTMLCanvasElement) {
         super(game, canvas, "diningHall.png");
@@ -53,8 +54,19 @@ export class DiningHall extends Room {
         this.popup.style.border = "3px solid black";
         this.overlay.appendChild(this.popup);
 
-        this.overlay.onclick = (e) => { this.overlay.style.display = "none"; };
+        this.overlay.addEventListener("click", (e) => { this.hideSave() });
+
+        window.addEventListener("keypress", (e) => { this.onkeypress(e) });
     }
+
+    deactivate() {
+        super.deactivate();
+        this.overlay.innerHTML = "";
+        this.overlay.removeEventListener("click", (e) => { this.hideSave() });
+        window.removeEventListener("keypress", (e) => { this.onkeypress(e) });
+    }
+
+
 
     draw(canvas: HTMLCanvasElement) {
         super.draw(canvas);
@@ -65,19 +77,19 @@ export class DiningHall extends Room {
             ctx.drawImage(this.imgSafe, 0, 0, this.popup.width, this.popup.height);
             // TODO: Refactor this
             ctx.translate(pxfactor * 978, pyfactor * 946);
-            ctx.rotate(this.deg1 * Math.PI / 180);
+            ctx.rotate(this.angles[0]);
             ctx.translate(-pxfactor * 978, -pyfactor * 946);
             ctx.drawImage(this.imgDisk1, 0, 0, this.popup.width, this.popup.height);
             ctx.resetTransform();
 
             ctx.translate(pxfactor * 978, pyfactor * 946);
-            ctx.rotate(this.deg2 * Math.PI / 180);
+            ctx.rotate(this.angles[1]);
             ctx.translate(-pxfactor * 978, -pyfactor * 946);
             ctx.drawImage(this.imgDisk2, 0, 0, this.popup.width, this.popup.height);
             ctx.resetTransform();
 
             ctx.translate(pxfactor * 978, pyfactor * 946);
-            ctx.rotate(this.deg3 * Math.PI / 180);
+            ctx.rotate(this.angles[2]);
             ctx.translate(-pxfactor * 978, -pyfactor * 946);
             ctx.drawImage(this.imgDisk3, 0, 0, this.popup.width, this.popup.height);
             ctx.resetTransform();
@@ -88,14 +100,23 @@ export class DiningHall extends Room {
 
     update(delta: number) {
         super.update(delta);
-        this.deg1 += delta * 0.04;
-        this.deg2 += delta * -0.04;
-        this.deg3 += delta * 0.03;
-    }
+        let rate = 0.001;
 
-    deactivate() {
-        this.overlay.innerHTML = "";
-        this.overlay.onclick = null;
+        for (let i = 0; i < this.goals.length; i++) {
+
+            if (this.angles[i] === this.goals[i]) {
+                continue;
+            } else if (this.angles[i] < this.goals[i]) {
+                this.angles[i] += rate * delta;
+
+            } else if (this.angles[i] > this.goals[i]) {
+                this.angles[i] -= rate * delta;
+
+            }
+            if (Math.abs(this.angles[i] - this.goals[i]) < rate * delta * 0.5) {
+                this.angles[i] = this.goals[i];
+            }
+        }
     }
 
     onclick(ev: MouseEvent) {
@@ -108,5 +129,24 @@ export class DiningHall extends Room {
         if (realx > 2150 && realx < 2330 && realy > 155 && realy < 420) {
             this.overlay.style.display = "block";
         }
+    }
+
+    onkeypress(ev: KeyboardEvent) {
+        let num = Number(ev.key);
+        if (!isNaN(num)) {
+            this.combi[this.index++] = num;
+            if (this.index >= this.combi.length) this.index = 0;
+            for (let i = 0; i < this.goals.length; i++) {
+                this.goals[i] = DiningHall.digitToAngle(this.combi[i]);
+            }
+        }
+    }
+
+    hideSave() {
+        this.overlay.style.display = "none";
+    }
+
+    private static digitToAngle(digit: number): number {
+        return (360 - digit * 36) * Math.PI / 180;
     }
 }
