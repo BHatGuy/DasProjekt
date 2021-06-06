@@ -14,4 +14,5 @@ Alles laufen lassen und bei Änderungen neu bauen:
 - Geometrien laden
 - Gameobject / Clickable
 - Nachrichten durchstellen
-- Refactor popup or create general cooridate normalization
+- Refactor popup 
+- create general cooridate normalization

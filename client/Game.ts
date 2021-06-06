@@ -1,4 +1,4 @@
-import { DiningHall } from "./DiningHall";
+import { DiningHall } from "./DiningHall/DiningHall";
 import { GameObject } from "./GameObject";
 import { Cockpit } from "./Cockpit";
 import { Room, RoomAlias } from "./Room";
@@ -16,6 +16,8 @@ export class Game {
     constructor(canvas: HTMLCanvasElement, socket: WebSocket) {
         this.canvas = canvas;
         this.context = canvas.getContext('2d') as CanvasRenderingContext2D;
+        this.context.imageSmoothingEnabled = true;
+        this.context.imageSmoothingQuality = "high";
         this.socket = socket;
         this.socket.onmessage = this.receive;
         this.rooms = {
