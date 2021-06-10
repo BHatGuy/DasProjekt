@@ -1,8 +1,36 @@
 {
     "global": {},
-    "ciningHall": {},
+    "diningHall": {},
     "cockpit": {
-        "ladder": [[0, 0], [260, 0], [260, 1800], [0, 1800]],
-        "lamp": [190, 0, 684, 340]
+        "img": "Cockpit.png",
+        "ladder": {
+            "poly": [
+                [
+                    0,
+                    0
+                ],
+                [
+                    260,
+                    0
+                ],
+                [
+                    260,
+                    1800
+                ],
+                [
+                    0,
+                    1800
+                ]
+            ]
+        },
+        "lamp": {
+            "img": "Cockpit_nurLampe.png",
+            "box": [
+                190,
+                0,
+                684,
+                340
+            ]
+        }
     }
 }

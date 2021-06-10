@@ -11,12 +11,12 @@ export class Cockpit extends Room {
     lampBounding: Flatten.Box;
 
     constructor(game: Game, canvas: HTMLCanvasElement, config: any) {
-        super(game, canvas, "Cockpit.png");
+        super(game, canvas, config.cockpit.img);
         let img2 = document.createElement("img");
-        img2.setAttribute("src", "Cockpit_nurLampe.png");
+        img2.setAttribute("src", config.cockpit.lamp.img);
         this.imgLamp = img2 as CanvasImageSource;
-        this.ladderBounding = new Flatten.Polygon(config.cockpit.ladder);
-        this.lampBounding = new Flatten.Box(...config.cockpit.lamp);
+        this.ladderBounding = new Flatten.Polygon(config.cockpit.ladder.poly);
+        this.lampBounding = new Flatten.Box(...config.cockpit.lamp.box);
     }
 
     activate() {

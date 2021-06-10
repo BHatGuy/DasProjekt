@@ -8,7 +8,7 @@ export class DiningHall extends Room {
     
     popup: HTMLCanvasElement | null = null;
     safe: Safe;
-    
+    // TODO: use config and Polygons
 
     constructor(game: Game, canvas: HTMLCanvasElement) {
         super(game, canvas, "diningHall.png");
