@@ -39,6 +39,7 @@ export class DiningHall extends Room {
         this.overlay.innerHTML = "";
         this.overlay.removeEventListener("click", (e) => { this.hidePopup() });
         window.removeEventListener("keypress", (e) => { this.onkeypress(e) });
+        // TODO fix Tresor Bug
     }
 
     update(delta: number){

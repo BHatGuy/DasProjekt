@@ -16,3 +16,4 @@ Alles laufen lassen und bei Änderungen neu bauen:
 - Nachrichten durchstellen
 - Refactor popup 
 - create general cooridate normalization
+- Tresor Bug

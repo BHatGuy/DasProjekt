@@ -15,9 +15,13 @@
     "start": "npm run backend & npm run watch"
   },
   "devDependencies": {
+    "@types/polygon": "^1.0.0",
     "browserify": "^17.0.0",
     "npm-watch": "^0.9.0",
     "serve": "^11.3.2",
     "tsify": "^5.0.4"
+  },
+  "dependencies": {
+    "polygon": "^1.0.2"
   }
 }
