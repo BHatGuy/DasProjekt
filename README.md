@@ -17,3 +17,4 @@ Alles laufen lassen und bei Änderungen neu bauen:
 - Refactor popup 
 - create general cooridate normalization
 - Tresor Bug
+- scale Polygons

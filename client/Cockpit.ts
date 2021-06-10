@@ -1,20 +1,25 @@
 import { Game } from "./Game";
 import { Room, RoomAlias } from "./Room";
+import Flatten from "@flatten-js/core";
 
 
 export class Cockpit extends Room {
     imgLamp: CanvasImageSource;
     lampCycle = 0;
     lamp = false;
+    ladderBounding: Flatten.Polygon;
+    lampBounding: Flatten.Box;
 
-    constructor(game: Game, canvas: HTMLCanvasElement) {
+    constructor(game: Game, canvas: HTMLCanvasElement, config: any) {
         super(game, canvas, "Cockpit.png");
         let img2 = document.createElement("img");
         img2.setAttribute("src", "Cockpit_nurLampe.png");
         this.imgLamp = img2 as CanvasImageSource;
+        this.ladderBounding = new Flatten.Polygon(config.cockpit.ladder);
+        this.lampBounding = new Flatten.Box(...config.cockpit.lamp);
     }
 
-    activate(){
+    activate() {
         super.activate();
         this.canvas.onmousemove = (e: MouseEvent) => { this.mousemove(e); };
     }
@@ -29,7 +34,10 @@ export class Cockpit extends Room {
         super.draw(canvas);
         let ctx = canvas.getContext("2d");
         if (this.lamp) {
-            ctx?.drawImage(this.imgLamp, 190 * this.xfactor, 0, this.imgLamp.width as number * this.xfactor, this.imgLamp.height as number * this.yfactor);
+            //this.ladderBounding.
+            let width = (this.lampBounding.xmax - this.lampBounding.xmin) * this.xfactor;
+            let height = (this.lampBounding.ymax - this.lampBounding.ymin) * this.yfactor;
+            ctx?.drawImage(this.imgLamp, this.lampBounding.xmin * this.xfactor, this.lampBounding.ymin, width, height);
         }
     }
 
@@ -41,11 +49,12 @@ export class Cockpit extends Room {
         }
     }
 
-    mousemove(ev: MouseEvent ){
+    mousemove(ev: MouseEvent) {
         let realx = ev.offsetX / this.xfactor;
         let realy = ev.offsetY / this.yfactor;
+        let point = new Flatten.Point(realx, realy);
 
-        if (realx < 260) {
+        if (this.ladderBounding.contains(point)) {
             this.canvas.style.cursor = "pointer";
         } else {
             this.canvas.style.cursor = "initial";
@@ -56,8 +65,9 @@ export class Cockpit extends Room {
     onclick(ev: MouseEvent) {
         let realx = ev.offsetX / this.xfactor;
         let realy = ev.offsetY / this.yfactor;
+        let point = new Flatten.Point(realx, realy);
 
-        if (realx < 260) {
+        if (this.ladderBounding.contains(point)) {
             this.game.nextRoom(RoomAlias.DiningHall);
         }
     }

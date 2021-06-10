@@ -4,7 +4,8 @@
     "alwaysStrict": true,
     "module": "CommonJS",
     "outDir": "build",
-    "esModuleInterop": true
+    "lib": ["ES2015", "DOM"],
+    "target": "ES5"
   },
   "include": [
     "client/",

@@ -12,8 +12,10 @@ export class Game {
     socket: WebSocket;
     rooms: Record<RoomAlias, Room>;
     currentRoom: Room;
+    config: any;
 
-    constructor(canvas: HTMLCanvasElement, socket: WebSocket) {
+    constructor(canvas: HTMLCanvasElement, socket: WebSocket, config: any) {
+        this.config = config;
         this.canvas = canvas;
         this.context = canvas.getContext('2d') as CanvasRenderingContext2D;
         this.context.imageSmoothingEnabled = true;
@@ -22,7 +24,7 @@ export class Game {
         this.socket.onmessage = this.receive;
         this.rooms = {
             [RoomAlias.DiningHall]: new DiningHall(this, canvas),
-            [RoomAlias.Cockpit]: new Cockpit(this, canvas),
+            [RoomAlias.Cockpit]: new Cockpit(this, canvas, this.config),
         }
         this.currentRoom = this.rooms[RoomAlias.DiningHall];
         this.currentRoom.activate();
