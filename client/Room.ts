@@ -1,5 +1,6 @@
 import { Game } from "./Game";
 import { GameObject } from "./GameObject";
+import Flatten from "@flatten-js/core";
 
 export enum RoomAlias {
     DiningHall,
@@ -48,5 +49,15 @@ export class Room implements GameObject {
 
     onclick(ev: MouseEvent) {
 
+    }
+
+    onmove(ev: MouseEvent){
+
+    }
+
+    scale(x: number, y: number): Flatten.Point{
+        let realx = x / this.xfactor;
+        let realy = y / this.yfactor;
+        return new Flatten.Point(realx, realy);
     }
 }

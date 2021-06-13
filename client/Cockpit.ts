@@ -21,12 +21,10 @@ export class Cockpit extends Room {
 
     activate() {
         super.activate();
-        this.canvas.onmousemove = (e: MouseEvent) => { this.mousemove(e); };
     }
 
     deactivate() {
         super.activate();
-        this.canvas.onmousemove = null;
         this.canvas.style.cursor = "initial";
     }
 
@@ -49,10 +47,9 @@ export class Cockpit extends Room {
         }
     }
 
-    mousemove(ev: MouseEvent) {
-        let realx = ev.offsetX / this.xfactor;
-        let realy = ev.offsetY / this.yfactor;
-        let point = new Flatten.Point(realx, realy);
+    onmove(ev: MouseEvent) {
+        super.onmove(ev);
+        let point = this.scale(ev.offsetX, ev.offsetY);
 
         if (this.ladderBounding.contains(point)) {
             this.canvas.style.cursor = "pointer";
@@ -63,9 +60,7 @@ export class Cockpit extends Room {
 
 
     onclick(ev: MouseEvent) {
-        let realx = ev.offsetX / this.xfactor;
-        let realy = ev.offsetY / this.yfactor;
-        let point = new Flatten.Point(realx, realy);
+        let point = this.scale(ev.offsetX, ev.offsetY);
 
         if (this.ladderBounding.contains(point)) {
             this.game.nextRoom(RoomAlias.DiningHall);

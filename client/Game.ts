@@ -23,12 +23,13 @@ export class Game {
         this.socket = socket;
         this.socket.onmessage = this.receive;
         this.rooms = {
-            [RoomAlias.DiningHall]: new DiningHall(this, canvas),
+            [RoomAlias.DiningHall]: new DiningHall(this, canvas, config),
             [RoomAlias.Cockpit]: new Cockpit(this, canvas, this.config),
         }
         this.currentRoom = this.rooms[RoomAlias.DiningHall];
         this.currentRoom.activate();
-        canvas.onclick = (e: MouseEvent) => { this.onclick(e); };
+        canvas.onclick = (e: MouseEvent) => { this.currentRoom.onclick(e); };
+        canvas.onmousemove = (e: MouseEvent) => { this.currentRoom.onmove(e); }
     }
 
 
@@ -56,7 +57,7 @@ export class Game {
     }
 
     onclick(ev: MouseEvent) {
-        this.currentRoom.onclick(ev);
+
     }
 
     nextRoom(r: RoomAlias) {

@@ -1,18 +1,23 @@
 import { Game } from "../Game";
 import { GameObject } from "../GameObject";
 import { Room, RoomAlias } from "../Room";
-import {Safe} from "./Safe";
+import { Safe } from "./Safe";
+import Flatten from "@flatten-js/core";
+
 
 
 export class DiningHall extends Room {
-    
+
     popup: HTMLCanvasElement | null = null;
     safe: Safe;
-    // TODO: use config and Polygons
+    doorBounding: Flatten.Polygon;
+    safeBounding: Flatten.Polygon;
 
-    constructor(game: Game, canvas: HTMLCanvasElement) {
-        super(game, canvas, "diningHall.png");
+    constructor(game: Game, canvas: HTMLCanvasElement, config: any) {
+        super(game, canvas, config.diningHall.img);
         this.safe = new Safe(this);
+        this.doorBounding = new Flatten.Polygon(config.diningHall.door);
+        this.safeBounding = new Flatten.Polygon(config.diningHall.safe);
     }
 
     activate() {
@@ -42,7 +47,7 @@ export class DiningHall extends Room {
         // TODO fix Tresor Bug
     }
 
-    update(delta: number){
+    update(delta: number) {
         super.update(delta);
         this.safe.update(delta);
     }
@@ -55,13 +60,12 @@ export class DiningHall extends Room {
     }
 
     onclick(ev: MouseEvent) {
-        let realx = ev.offsetX / this.xfactor;
-        let realy = ev.offsetY / this.yfactor;
+        let point = this.scale(ev.offsetX, ev.offsetY);
 
-        if (realx > 1740 && realx < 2070 && realy > 160 && realy < 820) {
+        if (this.doorBounding.contains(point)) {
             this.game.nextRoom(RoomAlias.Cockpit);
         }
-        if (realx > 2150 && realx < 2330 && realy > 155 && realy < 420) {
+        if (this.safeBounding.contains(point)) {
             this.overlay.style.display = "block";
         }
     }
@@ -70,9 +74,19 @@ export class DiningHall extends Room {
         this.safe.onkeypress(ev);
     }
 
+    onmove(ev: MouseEvent){
+        super.onmove(ev);
+        let point = this.scale(ev.offsetX, ev.offsetY);
+        if (this.doorBounding.contains(point) || this.safeBounding.contains(point)) {
+            this.canvas.style.cursor = "pointer";
+        } else {
+            this.canvas.style.cursor = "initial";
+        }
+    }
+
     hidePopup() {
         this.overlay.style.display = "none";
     }
 
-    
+
 }
