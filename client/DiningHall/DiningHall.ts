@@ -1,5 +1,4 @@
 import { Game } from "../Game";
-import { GameObject } from "../GameObject";
 import { Room, RoomAlias } from "../Room";
 import { Safe } from "./Safe";
 import Flatten from "@flatten-js/core";

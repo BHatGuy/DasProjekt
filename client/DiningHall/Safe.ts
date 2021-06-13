@@ -1,7 +1,6 @@
-import { GameObject } from "../GameObject";
 import { DiningHall } from "./DiningHall";
 
-export class Safe implements GameObject {
+export class Safe {
     imgSafe: CanvasImageSource;
     imgDisk1: CanvasImageSource;
     imgDisk2: CanvasImageSource;

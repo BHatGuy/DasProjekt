@@ -1,4 +1,3 @@
-import { GameObject } from "./GameObject"
 import { DiningHall } from "./DiningHall/DiningHall";
 import { Game } from "./Game";
 

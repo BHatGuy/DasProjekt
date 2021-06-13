@@ -1,13 +1,13 @@
 import { Game } from "./Game";
-import { GameObject } from "./GameObject";
 import Flatten from "@flatten-js/core";
 
 export enum RoomAlias {
     DiningHall,
     Cockpit,
+    MachineRoom,
 }
 
-export class Room implements GameObject {
+export class Room {
     protected imgBckgrnd: CanvasImageSource;
     protected game: Game;
     protected canvas: HTMLCanvasElement;
