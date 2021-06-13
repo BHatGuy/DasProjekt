@@ -1,5 +1,5 @@
-import { Game } from "./Game";
-import { Room, RoomAlias } from "./Room";
+import { Game } from "../Game";
+import { Room, RoomAlias } from "../Room";
 import Flatten from "@flatten-js/core";
 
 
