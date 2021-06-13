@@ -32,7 +32,10 @@ export class Room {
 
     activate() { }
 
-    deactivate() { }
+    deactivate() {
+        this.canvas.style.cursor = "initial";
+
+    }
 
     draw(canvas: HTMLCanvasElement): void {
         let ctx = canvas.getContext("2d");
@@ -51,11 +54,11 @@ export class Room {
 
     }
 
-    onmove(ev: MouseEvent){
+    onmove(ev: MouseEvent) {
 
     }
 
-    scale(x: number, y: number): Flatten.Point{
+    scale(x: number, y: number): Flatten.Point {
         let realx = x / this.xfactor;
         let realy = y / this.yfactor;
         return new Flatten.Point(realx, realy);

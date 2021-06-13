@@ -19,10 +19,6 @@ export class Cockpit extends Room {
         this.lampBounding = new Flatten.Box(...config.cockpit.lamp.box);
     }
 
-    activate() {
-        super.activate();
-    }
-
     deactivate() {
         super.activate();
         this.canvas.style.cursor = "initial";

@@ -20,8 +20,6 @@ function init() {
     socket = new WebSocket("ws://localhost:6789");
 }
 
-
-
 function mainLoop(timeStamp: number) {
     let delta = timeStamp - lastFrame;
     lastFrame = timeStamp;

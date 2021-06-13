@@ -19,5 +19,8 @@
             "img": "Cockpit_nurLampe.png",
             "box": [190, 0, 684, 340]
         }
+    },
+    "machineRoom": {
+        "img": "Maschinenraum.jpg"
     }
 }

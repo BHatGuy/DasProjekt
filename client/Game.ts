@@ -1,7 +1,7 @@
 import { DiningHall } from "./DiningHall/DiningHall";
-import { GameObject } from "./GameObject";
-import { Cockpit } from "./Cockpit";
+import { Cockpit } from "./Cockpit/Cockpit";
 import { Room, RoomAlias } from "./Room";
+import { MachineRoom } from "./MachineRoom/MachineRoom";
 
 
 
@@ -25,6 +25,7 @@ export class Game {
         this.rooms = {
             [RoomAlias.DiningHall]: new DiningHall(this, canvas, config),
             [RoomAlias.Cockpit]: new Cockpit(this, canvas, this.config),
+            [RoomAlias.MachineRoom]: new MachineRoom(this, canvas, this.config)
         }
         this.currentRoom = this.rooms[RoomAlias.DiningHall];
         this.currentRoom.activate();
