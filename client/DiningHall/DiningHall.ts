@@ -12,12 +12,21 @@ export class DiningHall extends Room {
     safe: Safe;
     doorBounding: Flatten.Polygon;
     safeBounding: Flatten.Polygon;
+    glassBounding: Flatten.Polygon;
+    grafImg: CanvasImageSource;
+    grafBox: Flatten.Box;
+    graf = false;
 
     constructor(game: Game, canvas: HTMLCanvasElement, config: any) {
         super(game, canvas, config.diningHall.img);
         this.safe = new Safe(this);
         this.doorBounding = new Flatten.Polygon(config.diningHall.door);
         this.safeBounding = new Flatten.Polygon(config.diningHall.safe);
+        this.glassBounding = new Flatten.Polygon(config.diningHall.glass);
+        let img = document.createElement("img");
+        img.setAttribute("src", config.diningHall.graf.img);
+        this.grafImg = img;
+        this.grafBox = new Flatten.Box(...config.diningHall.graf.box);
     }
 
     activate() {
@@ -57,6 +66,12 @@ export class DiningHall extends Room {
         if (this.popup) {
             this.safe.draw(this.popup);
         }
+        if (this.graf) {
+            let ctx = canvas.getContext("2d");
+            let width = (this.grafBox.xmax - this.grafBox.xmin) * this.xfactor;
+            let height = (this.grafBox.ymax - this.grafBox.ymin) * this.yfactor;
+            ctx?.drawImage(this.grafImg, this.grafBox.xmin, this.grafBox.ymin, width, height);
+        }
     }
 
     onclick(ev: MouseEvent) {
@@ -68,6 +83,9 @@ export class DiningHall extends Room {
         if (this.safeBounding.contains(point)) {
             this.overlay.style.display = "block";
         }
+        if (this.glassBounding.contains(point)) {
+            this.graf = !this.graf;
+        }
     }
 
     onkeypress(ev: KeyboardEvent) {
@@ -77,7 +95,7 @@ export class DiningHall extends Room {
     onmove(ev: MouseEvent){
         super.onmove(ev);
         let point = this.scale(ev.offsetX, ev.offsetY);
-        if (this.doorBounding.contains(point) || this.safeBounding.contains(point)) {
+        if (this.doorBounding.contains(point) || this.safeBounding.contains(point) || this.glassBounding.contains(point)) {
             this.canvas.style.cursor = "pointer";
         } else {
             this.canvas.style.cursor = "initial";
