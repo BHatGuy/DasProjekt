@@ -4,16 +4,17 @@ import Flatten from "@flatten-js/core";
 
 
 export class MachineRoom extends Room {
-    
+
+    doorBounding: Flatten.Polygon;
 
     constructor(game: Game, canvas: HTMLCanvasElement, config: any) {
         super(game, canvas, config.machineRoom.img);
+        this.doorBounding = new Flatten.Polygon(config.machineRoom.door);
 
     }
 
     draw(canvas: HTMLCanvasElement): void {
         super.draw(canvas);
-
     }
 
 
@@ -21,19 +22,19 @@ export class MachineRoom extends Room {
         super.onmove(ev);
         let point = this.scale(ev.offsetX, ev.offsetY);
 
-        // if (this.ladderBounding.contains(point)) {
-        //     this.canvas.style.cursor = "pointer";
-        // } else {
-        //     this.canvas.style.cursor = "initial";
-        // }
+        if (this.doorBounding.contains(point)) {
+            this.canvas.style.cursor = "pointer";
+        } else {
+            this.canvas.style.cursor = "initial";
+        }
     }
 
 
     onclick(ev: MouseEvent) {
         let point = this.scale(ev.offsetX, ev.offsetY);
 
-        // if (this.ladderBounding.contains(point)) {
-        //     this.game.nextRoom(RoomAlias.DiningHall);
-        // }
+        if (this.doorBounding.contains(point)) {
+            this.game.nextRoom(RoomAlias.Cockpit);
+        }
     }
 }

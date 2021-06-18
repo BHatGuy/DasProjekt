@@ -91,7 +91,7 @@ export class DiningHall extends Room {
         this.safe.onkeypress(ev);
     }
 
-    onmove(ev: MouseEvent){
+    onmove(ev: MouseEvent) {
         super.onmove(ev);
         let point = this.scale(ev.offsetX, ev.offsetY);
         if (this.doorBounding.contains(point) || this.safeBounding.contains(point) || this.glassBounding.contains(point)) {
