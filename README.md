@@ -11,10 +11,8 @@ Alles laufen lassen und bei Änderungen neu bauen:
 
 
 # TODO
-- Geometrien laden
-- Gameobject / Clickable
+- Clickable
 - Nachrichten durchstellen
 - Refactor popup 
 - create general cooridate normalization
-- Tresor Bug
 - scale Polygons

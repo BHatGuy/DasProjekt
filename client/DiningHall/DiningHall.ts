@@ -15,6 +15,8 @@ export class DiningHall extends Room {
     grafImg: CanvasImageSource;
     grafBox: Flatten.Box;
     graf = false;
+    keypressListener = (e: KeyboardEvent) => { this.onkeypress(e) };
+    mouseClickListener = (e: MouseEvent) => { this.hidePopup() };
 
     constructor(game: Game, canvas: HTMLCanvasElement, config: any) {
         super(game, canvas, config.diningHall.img);
@@ -42,17 +44,17 @@ export class DiningHall extends Room {
         this.popup.style.border = "3px solid black";
         this.overlay.appendChild(this.popup);
 
-        this.overlay.addEventListener("click", (e) => { this.hidePopup() });
+        this.overlay.addEventListener("click", this.mouseClickListener);
 
-        window.addEventListener("keypress", (e) => { this.onkeypress(e) });
+        window.addEventListener("keypress", this.keypressListener);
+
     }
 
     deactivate() {
         super.deactivate();
         this.overlay.innerHTML = "";
-        this.overlay.removeEventListener("click", (e) => { this.hidePopup() });
-        window.removeEventListener("keypress", (e) => { this.onkeypress(e) });
-        // TODO fix Tresor Bug
+        this.overlay.removeEventListener("click", this.mouseClickListener);
+        window.removeEventListener("keypress", this.keypressListener);
     }
 
     update(delta: number) {
