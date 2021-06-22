@@ -78,7 +78,7 @@ export class DiningHall extends Room {
         let point = this.scale(ev.offsetX, ev.offsetY);
 
         if (this.doorBounding.contains(point)) {
-            this.game.nextRoom(RoomAlias.Cockpit);
+            this.game.nextRoom(RoomAlias.UpperHallway);
         }
         if (this.safeBounding.contains(point)) {
             this.overlay.style.display = "block";

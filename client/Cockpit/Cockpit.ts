@@ -9,7 +9,6 @@ export class Cockpit extends Room {
     lamp = false;
     ladderBounding: Flatten.Polygon;
     lampBounding: Flatten.Box;
-    pipeBoundig: Flatten.Polygon;
 
     constructor(game: Game, canvas: HTMLCanvasElement, config: any) {
         super(game, canvas, config.cockpit.img);
@@ -18,7 +17,6 @@ export class Cockpit extends Room {
         this.imgLamp = img2 as CanvasImageSource;
         this.ladderBounding = new Flatten.Polygon(config.cockpit.ladder.poly);
         this.lampBounding = new Flatten.Box(...config.cockpit.lamp.box);
-        this.pipeBoundig = new Flatten.Polygon(config.cockpit.pipe);
     }
 
     deactivate() {
@@ -49,7 +47,7 @@ export class Cockpit extends Room {
         super.onmove(ev);
         let point = this.scale(ev.offsetX, ev.offsetY);
 
-        if (this.ladderBounding.contains(point) || this.pipeBoundig.contains(point)) {
+        if (this.ladderBounding.contains(point)) {
             this.canvas.style.cursor = "pointer";
         } else {
             this.canvas.style.cursor = "initial";
@@ -61,10 +59,7 @@ export class Cockpit extends Room {
         let point = this.scale(ev.offsetX, ev.offsetY);
 
         if (this.ladderBounding.contains(point)) {
-            this.game.nextRoom(RoomAlias.DiningHall);
-        }
-        if (this.pipeBoundig.contains(point)) {
-            this.game.nextRoom(RoomAlias.MachineRoom);
+            this.game.nextRoom(RoomAlias.LowerHallway);
         }
     }
 }
