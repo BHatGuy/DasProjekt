@@ -7,10 +7,11 @@ export class Safe {
     imgDisk2: CanvasImageSource;
     imgDisk3: CanvasImageSource;
     imgThingy: CanvasImageSource;
+    imgSurprise: CanvasImageSource;
     angles = [this.digitToAngle(0), this.digitToAngle(0), this.digitToAngle(0)];
     goals = [this.digitToAngle(0), this.digitToAngle(0), this.digitToAngle(0)];
     combi = [0, 0, 0];
-    solution = [4, 2, 0];
+    solution = [4, 2, 8];
     solved = false;
     index = 0;
     rate = 0.0008;
@@ -42,6 +43,10 @@ export class Safe {
         let t = document.createElement("img");
         t.src = "Anzeige.png";
         this.imgThingy = t;
+
+        let s = document.createElement("img");
+        s.src = "Doener_berlin_kraeuter.png";
+        this.imgSurprise = s;
     }
 
     draw(canvas: HTMLCanvasElement): void {
@@ -51,6 +56,7 @@ export class Safe {
         ctx.drawImage(this.imgSafe, 0, 0, canvas.width, canvas.height);
         if (this.solved) {
             ctx.drawImage(this.imgSafeOpen, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(this.imgSurprise, 780*pxfactor, 700*pyfactor, 0.7*1024*pxfactor, 0.7*1010*pyfactor);
         } else {
             // TODO: Refactor this
             ctx.translate(pxfactor * 978, pyfactor * 946);

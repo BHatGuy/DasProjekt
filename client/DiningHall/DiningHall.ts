@@ -52,7 +52,6 @@ export class DiningHall extends Room {
 
     deactivate() {
         super.deactivate();
-        this.overlay.innerHTML = "";
         this.overlay.removeEventListener("click", this.mouseClickListener);
         window.removeEventListener("keypress", this.keypressListener);
     }

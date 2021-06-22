@@ -5,6 +5,8 @@ export enum RoomAlias {
     DiningHall,
     Cockpit,
     MachineRoom,
+    UpperHallway,
+    LowerHallway,
 }
 
 export class Room {
@@ -34,7 +36,7 @@ export class Room {
 
     deactivate() {
         this.canvas.style.cursor = "initial";
-
+        this.overlay.innerHTML = "";
     }
 
     draw(canvas: HTMLCanvasElement): void {

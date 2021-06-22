@@ -2,6 +2,8 @@ import { DiningHall } from "./DiningHall/DiningHall";
 import { Cockpit } from "./Cockpit/Cockpit";
 import { Room, RoomAlias } from "./Room";
 import { MachineRoom } from "./MachineRoom/MachineRoom";
+import { LowerHallway } from "./LowerHallway/LowerHallway";
+import { UpperHallway } from "./UpperHallway/UpperHallway";
 
 
 
@@ -25,10 +27,13 @@ export class Game {
         this.rooms = {
             [RoomAlias.DiningHall]: new DiningHall(this, canvas, config),
             [RoomAlias.Cockpit]: new Cockpit(this, canvas, this.config),
-            [RoomAlias.MachineRoom]: new MachineRoom(this, canvas, this.config)
+            [RoomAlias.MachineRoom]: new MachineRoom(this, canvas, this.config),
+            [RoomAlias.UpperHallway]: new UpperHallway(this, canvas, this.config),
+            [RoomAlias.LowerHallway]: new LowerHallway(this, canvas, this.config)
         }
-        this.currentRoom = this.rooms[RoomAlias.DiningHall];
+        this.currentRoom = this.rooms[RoomAlias.UpperHallway];
         this.currentRoom.activate();
+        // TODO: feractor this part!!!
         canvas.onclick = (e: MouseEvent) => { this.currentRoom.onclick(e); };
         canvas.onmousemove = (e: MouseEvent) => { this.currentRoom.onmove(e); }
     }
