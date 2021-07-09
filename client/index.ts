@@ -5,6 +5,7 @@ import { Game } from "./Game";
 let lastFrame: number;
 let game: Game;
 let canvas: HTMLCanvasElement;
+let backgroundCvs: HTMLCanvasElement;
 let socket: WebSocket;
 
 // Set listeners for window
@@ -16,6 +17,7 @@ function init() {
     canvas.height = window.innerHeight - 100;
     canvas.width = (window.innerHeight - 100) * (4 / 3);
 
+    backgroundCvs = document.getElementById('background') as HTMLCanvasElement;
 
     socket = new WebSocket("ws://localhost:6789");
 }
@@ -29,7 +31,7 @@ function mainLoop(timeStamp: number) {
 
 function handleConfigAndStart(config: string) {
     let json = JSON.parse(config);
-    game = new Game(canvas, socket, json);
+    game = new Game(canvas, backgroundCvs, socket, json);
     // Start the first frame request
     lastFrame = performance.now();
     window.requestAnimationFrame(mainLoop);

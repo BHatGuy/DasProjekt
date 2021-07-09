@@ -4,6 +4,7 @@ import { Room, RoomAlias } from "./Room";
 import { MachineRoom } from "./MachineRoom/MachineRoom";
 import { LowerHallway } from "./LowerHallway/LowerHallway";
 import { UpperHallway } from "./UpperHallway/UpperHallway";
+import { Background } from "./Background";
 
 
 
@@ -15,8 +16,9 @@ export class Game {
     rooms: Record<RoomAlias, Room>;
     currentRoom: Room;
     config: any;
+    background: Background;
 
-    constructor(canvas: HTMLCanvasElement, socket: WebSocket, config: any) {
+    constructor(canvas: HTMLCanvasElement, background: HTMLCanvasElement, socket: WebSocket, config: any) {
         this.config = config;
         this.canvas = canvas;
         this.context = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -36,6 +38,7 @@ export class Game {
         // TODO: feractor this part!!!
         canvas.onclick = (e: MouseEvent) => { this.currentRoom.onclick(e); };
         canvas.onmousemove = (e: MouseEvent) => { this.currentRoom.onmove(e); }
+        this.background = new Background(this, background, config);
     }
 
 
@@ -56,9 +59,11 @@ export class Game {
 
         // update: 
         this.currentRoom.update(delta);
+        this.background.update(delta);
 
         // draw:
         this.currentRoom.draw(this.canvas);
+        this.background.draw();
 
     }
 
