@@ -5,7 +5,13 @@
     "module": "CommonJS",
     "outDir": "build",
     "lib": ["ES2015", "DOM"],
-    "target": "ES5"
+    "target": "ES5",
+    "esModuleInterop": true,
+    "paths": {
+      "mini-signals": [
+        "./node_modules/resource-loader/typings/mini-signals.d.ts"
+      ]
+    }
   },
   "include": [
     "client/",

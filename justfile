@@ -4,7 +4,7 @@ all:
 
 build: check-types
     browserify client/index.ts -p [ tsify --noImplicitAny ] -o build/bundle.js 
-    cp client/static/* build/
+    cp -r client/static/* build/
     -rm build/*tmp*
 
 check-types:

@@ -1,40 +1,23 @@
 import { Game } from "../Game";
 import { Room, RoomAlias } from "../Room";
-import Flatten from "@flatten-js/core";
+import * as PIXI from 'pixi.js';
 
 
 export class MachineRoom extends Room {
 
-    doorBounding: Flatten.Polygon;
+    doorBounding: PIXI.Graphics;
 
-    constructor(game: Game, canvas: HTMLCanvasElement, config: any) {
-        super(game, canvas, config.machineRoom.img);
-        this.doorBounding = new Flatten.Polygon(config.machineRoom.door);
-
+    constructor(game: Game) {
+        super(game, game.config.machineRoom.img);
+        this.doorBounding = new PIXI.Graphics();
+        this.doorBounding.hitArea = new PIXI.Polygon(game.config.machineRoom.door);
+        this.doorBounding.interactive = true;
+        this.doorBounding.on("click", this.onclick);
+        this.loadResources();
     }
 
-    draw(canvas: HTMLCanvasElement): void {
-        super.draw(canvas);
-    }
+    onclick = (data: PIXI.InteractionData) => {
+        this.game.nextRoom(RoomAlias.UpperHallway);
+    };
 
-
-    onmove(ev: MouseEvent) {
-        super.onmove(ev);
-        let point = this.scale(ev.offsetX, ev.offsetY);
-
-        if (this.doorBounding.contains(point)) {
-            this.canvas.style.cursor = "pointer";
-        } else {
-            this.canvas.style.cursor = "initial";
-        }
-    }
-
-
-    onclick(ev: MouseEvent) {
-        let point = this.scale(ev.offsetX, ev.offsetY);
-
-        if (this.doorBounding.contains(point)) {
-            this.game.nextRoom(RoomAlias.UpperHallway);
-        }
-    }
 }

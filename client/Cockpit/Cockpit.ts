@@ -1,41 +1,49 @@
 import { Game } from "../Game";
 import { Room, RoomAlias } from "../Room";
-import Flatten from "@flatten-js/core";
+import * as PIXI from 'pixi.js';
 
 
 export class Cockpit extends Room {
-    imgLamp: CanvasImageSource;
+    imgLamp = new PIXI.Sprite();
     lampCycle = 0;
     lamp = false;
-    ladderBounding: Flatten.Polygon;
-    lampBounding: Flatten.Box;
+    ladderBounding: PIXI.Graphics;
 
-    constructor(game: Game, canvas: HTMLCanvasElement, config: any) {
-        super(game, canvas, config.cockpit.img);
-        let img2 = document.createElement("img");
-        img2.setAttribute("src", config.cockpit.lamp.img);
-        this.imgLamp = img2 as CanvasImageSource;
-        this.ladderBounding = new Flatten.Polygon(config.cockpit.ladder.poly);
-        this.lampBounding = new Flatten.Box(...config.cockpit.lamp.box);
+    constructor(game: Game) {
+        super(game, game.config.cockpit.img);
+
+        this.loader.add("lamp", game.config.cockpit.lamp.img);
+
+        this.ladderBounding = new PIXI.Graphics();
+        this.ladderBounding.hitArea = new PIXI.Polygon(game.config.cockpit.ladder.poly);
+        this.ladderBounding.interactive = true;
+
+        this.loadResources();
+    }
+
+    saveResources(resources: any) {
+        super.saveResources(resources);
+        this.imgLamp = new PIXI.Sprite(resources.lamp.texture);
+        this.imgLamp.x = this.game.config.cockpit.lamp.x;
+        this.imgLamp.y = this.game.config.cockpit.lamp.y;
+        this.stage.addChild(this.imgLamp);
+        super.saveResources(resources);
+    }
+
+
+    activate() {
+        super.activate();
+        this.game.app.ticker.add(this.update);
+        this.ladderBounding.on("click", this.onclick);
     }
 
     deactivate() {
-        super.activate();
-        this.canvas.style.cursor = "initial";
+        super.deactivate();
+        this.game.app.ticker.remove(this.update);
+        this.ladderBounding.off("click", this.onclick);
     }
 
-    draw(canvas: HTMLCanvasElement): void {
-        super.draw(canvas);
-        let ctx = canvas.getContext("2d");
-        if (this.lamp) {
-            //this.ladderBounding.
-            let width = (this.lampBounding.xmax - this.lampBounding.xmin) * this.xfactor;
-            let height = (this.lampBounding.ymax - this.lampBounding.ymin) * this.yfactor;
-            ctx?.drawImage(this.imgLamp, this.lampBounding.xmin * this.xfactor, this.lampBounding.ymin, width, height);
-        }
-    }
-
-    update(delta: number): void {
+    update = (delta: number) => {
         this.lampCycle += delta;
         if (this.lampCycle > 750) {
             this.lamp = !this.lamp;
@@ -43,23 +51,7 @@ export class Cockpit extends Room {
         }
     }
 
-    onmove(ev: MouseEvent) {
-        super.onmove(ev);
-        let point = this.scale(ev.offsetX, ev.offsetY);
-
-        if (this.ladderBounding.contains(point)) {
-            this.canvas.style.cursor = "pointer";
-        } else {
-            this.canvas.style.cursor = "initial";
-        }
-    }
-
-
-    onclick(ev: MouseEvent) {
-        let point = this.scale(ev.offsetX, ev.offsetY);
-
-        if (this.ladderBounding.contains(point)) {
-            this.game.nextRoom(RoomAlias.LowerHallway);
-        }
+    onclick = (ev: PIXI.InteractionData) => {
+        this.game.nextRoom(RoomAlias.LowerHallway);
     }
 }

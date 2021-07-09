@@ -1,6 +1,5 @@
-import { DiningHall } from "./DiningHall/DiningHall";
 import { Game } from "./Game";
-
+import * as PIXI from 'pixi.js'
 
 let lastFrame: number;
 let game: Game;
@@ -12,43 +11,14 @@ let socket: WebSocket;
 window.onload = init;
 
 function init() {
-    loadConfig(handleConfigAndStart);
-    canvas = document.getElementById('canvas') as HTMLCanvasElement;
-    canvas.height = window.innerHeight - 100;
-    canvas.width = (window.innerHeight - 100) * (4 / 3);
-
-    backgroundCvs = document.getElementById('background') as HTMLCanvasElement;
-
     socket = new WebSocket("ws://localhost:6789");
+    let app = new PIXI.Application({ resizeTo: window });
+    let config: any;
+    document.body.appendChild(app.view);
+    app.loader.add('config', 'config.json').load((loader, resources) => {
+        config = resources.config.data;
+        game = new Game(app, socket, config);
+    });
 }
 
-function mainLoop(timeStamp: number) {
-    let delta = timeStamp - lastFrame;
-    lastFrame = timeStamp;
-    game.gameLoop(delta);
-    window.requestAnimationFrame(mainLoop);
-}
-
-function handleConfigAndStart(config: string) {
-    let json = JSON.parse(config);
-    game = new Game(canvas, backgroundCvs, socket, json);
-    // Start the first frame request
-    lastFrame = performance.now();
-    window.requestAnimationFrame(mainLoop);
-}
-
-function loadConfig(callback: (s: string) => void) {
-
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'config.json', true);
-    xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == 200) {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-            callback(xobj.responseText);
-        }
-    };
-    xobj.send(null);
-
-}
 
