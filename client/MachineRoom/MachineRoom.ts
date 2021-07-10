@@ -12,7 +12,10 @@ export class MachineRoom extends Room {
         this.doorBounding = new PIXI.Graphics();
         this.doorBounding.hitArea = new PIXI.Polygon(game.config.machineRoom.door);
         this.doorBounding.interactive = true;
+        this.doorBounding.buttonMode = true;
+        
         this.doorBounding.on("click", this.onclick);
+        this.stage.addChild(this.doorBounding);
         this.loadResources();
     }
 

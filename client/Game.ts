@@ -1,4 +1,4 @@
-// import { DiningHall } from "./DiningHall/DiningHall";
+import { DiningHall } from "./DiningHall/DiningHall";
 import { Cockpit } from "./Cockpit/Cockpit";
 import { Room, RoomAlias } from "./Room";
 import { MachineRoom } from "./MachineRoom/MachineRoom";
@@ -24,8 +24,11 @@ export class Game {
         this.socket = socket;
         this.app = app;
         this.socket.onmessage = this.receive;
+
+        app.stage.scale.set(app.view.width / config.width, app.view.height / config.height)
+
         this.rooms = {
-            // [RoomAlias.DiningHall]: new DiningHall(this),
+            [RoomAlias.DiningHall]: new DiningHall(this),
             [RoomAlias.Cockpit]: new Cockpit(this),
             [RoomAlias.MachineRoom]: new MachineRoom(this),
             [RoomAlias.UpperHallway]: new UpperHallway(this),

@@ -1,4 +1,6 @@
-{
+{   
+    "width": 2400,
+    "height": 1800,
     "global": {},
     "diningHall": {
         "img": "images/Speisesaal.png",
@@ -6,8 +8,7 @@
         "safe": [2150, 155, 2330, 155, 2330, 420, 2150, 420],
         "glass": [1476,1128,1507,1132,1505,1221,1480,1217],
         "graf": {
-            "img": "images/Graf.png",
-            "box": [0, 0, 2400, 1800]
+            "img": "images/Graf.png"
         }
     },
     "cockpit": {

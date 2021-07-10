@@ -2,7 +2,7 @@ import { Game } from "./Game";
 import * as PIXI from 'pixi.js'
 
 export enum RoomAlias {
-    // DiningHall,
+    DiningHall,
     Cockpit,
     MachineRoom,
     UpperHallway,
@@ -24,6 +24,7 @@ export class Room {
         this.loader.add("backgroud", backgroud);
 
         this.stage = new PIXI.Container();
+
     }
 
     loadResources() {
@@ -38,11 +39,11 @@ export class Room {
     }
 
     activate() {
-        this.game.app.stage = this.stage;
+        this.game.app.stage.addChild(this.stage);
     }
 
     deactivate() {
-
+        this.game.app.stage.removeChild(this.stage);
     }
 
 

@@ -11,8 +11,7 @@ Alles laufen lassen und bei Änderungen neu bauen:
 
 
 # TODO
-- Clickable
 - Nachrichten durchstellen
 - Refactor popup 
-- create general cooridate normalization
-- scale Polygons
+- Singel Canvas?
+- rescale
