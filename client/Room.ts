@@ -15,13 +15,15 @@ export class Room {
     protected stage: PIXI.Container;
     protected loader: PIXI.Loader;
     // overlay: HTMLDivElement;
+    private backgroundId: string;
 
 
     constructor(game: Game, backgroud: string) {
         this.game = game;
         this.loader = new PIXI.Loader();
         //game.app.loader.reset();
-        this.loader.add("backgroud", backgroud);
+        this.loader.add(backgroud, backgroud);
+        this.backgroundId = backgroud;
 
         this.stage = new PIXI.Container();
 
@@ -34,7 +36,7 @@ export class Room {
     }
 
     saveResources(resources: any) {
-        this.background = new PIXI.Sprite(resources.backgroud.texture);
+        this.background = new PIXI.Sprite(resources[this.backgroundId].texture);
         this.stage.addChild(this.background);
     }
 
