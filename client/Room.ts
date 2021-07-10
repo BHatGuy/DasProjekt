@@ -10,18 +10,16 @@ export enum RoomAlias {
 }
 
 export class Room {
-    protected background: PIXI.Sprite = new PIXI.Sprite();
-    protected game: Game;
-    protected stage: PIXI.Container;
-    protected loader: PIXI.Loader;
-    // overlay: HTMLDivElement;
+    background: PIXI.Sprite = new PIXI.Sprite();
+    game: Game;
+    stage: PIXI.Container;
+    loader: PIXI.Loader;
     private backgroundId: string;
 
 
     constructor(game: Game, backgroud: string) {
         this.game = game;
         this.loader = new PIXI.Loader();
-        //game.app.loader.reset();
         this.loader.add(backgroud, backgroud);
         this.backgroundId = backgroud;
 

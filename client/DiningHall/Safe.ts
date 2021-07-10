@@ -1,87 +1,71 @@
+import { Game } from "../Game";
 import { DiningHall } from "./DiningHall";
+import * as PIXI from 'pixi.js';
 
 export class Safe {
-    imgSafe: CanvasImageSource;
-    imgSafeOpen: CanvasImageSource;
-    imgDisk1: CanvasImageSource;
-    imgDisk2: CanvasImageSource;
-    imgDisk3: CanvasImageSource;
-    imgThingy: CanvasImageSource;
-    imgSurprise: CanvasImageSource;
+    imgSafe = new PIXI.Sprite();
+    imgSafeOpen = new PIXI.Sprite();
+    imgDisk1 = new PIXI.Sprite();
+    imgDisk2 = new PIXI.Sprite();
+    imgDisk3 = new PIXI.Sprite();
+    imgIndicator = new PIXI.Sprite();
+    imgSurprise = new PIXI.Sprite();
     angles = [this.digitToAngle(0), this.digitToAngle(0), this.digitToAngle(0)];
     goals = [this.digitToAngle(0), this.digitToAngle(0), this.digitToAngle(0)];
     combi = [0, 0, 0];
     solution = [4, 2, 8];
     solved = false;
     index = 0;
-    rate = 0.0008;
+    rate = 1;
 
     parent: DiningHall;
+    game: Game;
+    stage = new PIXI.Container();
 
-    constructor(parent: DiningHall) {
+
+    constructor(parent: DiningHall, game: Game) {
         this.parent = parent;
-        let safe = document.createElement("img");
-        safe.src = "Safe.png";
-        this.imgSafe = safe;
+        this.game = game;
 
-        let safeOpen = document.createElement("img");
-        safeOpen.src = "Safe_offen.png";
-        this.imgSafeOpen = safeOpen;
+        let loader = new PIXI.Loader();
+        // TODO: use config
+        loader.add("safe", "images/Safe.png")
+            .add("safeOpen", "images/Safe_offen.png")
+            .add("disk1", "images/Scheibe1.png")
+            .add("disk2", "images/Scheibe2.png")
+            .add("disk3", "images/Scheibe3.png")
+            .add("indicator", "images/Anzeige.png")
+            .add("surprise", "images/Doener_berlin_kraeuter.png");
 
-        let d1 = document.createElement("img");
-        d1.src = "Scheibe1.png";
-        this.imgDisk1 = d1;
+        loader.load((loader, resources) => {
+            this.imgSafe = new PIXI.Sprite(resources.safe.texture);
+            this.imgSafeOpen = new PIXI.Sprite(resources.safeOpen.texture);
+            this.imgDisk1 = new PIXI.Sprite(resources.disk1.texture);
+            this.imgDisk2 = new PIXI.Sprite(resources.disk2.texture);
+            this.imgDisk3 = new PIXI.Sprite(resources.disk3.texture);
+            this.imgIndicator = new PIXI.Sprite(resources.indicator.texture);
+            this.imgSurprise = new PIXI.Sprite(resources.surprise.texture);
 
-        let d2 = document.createElement("img");
-        d2.src = "Scheibe2.png";
-        this.imgDisk2 = d2;
+            // TODO: can we solve this without shifting?
+            this.imgDisk1.pivot.set(978, 946);
+            this.imgDisk2.pivot.set(978, 946);
+            this.imgDisk3.pivot.set(978, 946);
 
-        let d3 = document.createElement("img");
-        d3.src = "Scheibe3.png";
-        this.imgDisk3 = d3;
+            this.imgDisk1.position.set(978, 946);
+            this.imgDisk2.position.set(978, 946);
+            this.imgDisk3.position.set(978, 946);
 
-        let t = document.createElement("img");
-        t.src = "Anzeige.png";
-        this.imgThingy = t;
+            this.imgSafeOpen.visible = false;
+            this.imgSurprise.visible = false;
 
-        let s = document.createElement("img");
-        s.src = "Doener_berlin_kraeuter.png";
-        this.imgSurprise = s;
+
+            this.stage.addChild(this.imgSafe, this.imgDisk1, this.imgDisk2, this.imgDisk3, this.imgIndicator);
+            this.stage.addChild(this.imgSafeOpen, this.imgSurprise);
+
+        });
     }
 
-    draw(canvas: HTMLCanvasElement): void {
-        let ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-        let pxfactor = canvas.width / (this.imgSafe.width as number);
-        let pyfactor = canvas.height / (this.imgSafe.height as number);
-        ctx.drawImage(this.imgSafe, 0, 0, canvas.width, canvas.height);
-        if (this.solved) {
-            ctx.drawImage(this.imgSafeOpen, 0, 0, canvas.width, canvas.height);
-            ctx.drawImage(this.imgSurprise, 780*pxfactor, 700*pyfactor, 0.7*1024*pxfactor, 0.7*1010*pyfactor);
-        } else {
-            // TODO: Refactor this
-            ctx.translate(pxfactor * 978, pyfactor * 946);
-            ctx.rotate(this.angles[0]);
-            ctx.translate(-pxfactor * 978, -pyfactor * 946);
-            ctx.drawImage(this.imgDisk1, 0, 0, canvas.width, canvas.height);
-            ctx.resetTransform();
-
-            ctx.translate(pxfactor * 978, pyfactor * 946);
-            ctx.rotate(this.angles[1]);
-            ctx.translate(-pxfactor * 978, -pyfactor * 946);
-            ctx.drawImage(this.imgDisk2, 0, 0, canvas.width, canvas.height);
-            ctx.resetTransform();
-
-            ctx.translate(pxfactor * 978, pyfactor * 946);
-            ctx.rotate(this.angles[2]);
-            ctx.translate(-pxfactor * 978, -pyfactor * 946);
-            ctx.drawImage(this.imgDisk3, 0, 0, canvas.width, canvas.height);
-            ctx.resetTransform();
-
-            ctx.drawImage(this.imgThingy, 0, 0, canvas.width, canvas.height);
-        }
-    }
-
-    update(delta: number): void {
+    update = (delta: number) => {
         let position = [false, false, false];
 
         for (let i = 0; i < this.goals.length; i++) {
@@ -99,13 +83,44 @@ export class Safe {
                 this.angles[i] = this.goals[i];
             }
         }
-        this.solved = position.reduce((a, b) => a && b);
+
+        this.imgDisk1.angle = this.angles[0];
+        this.imgDisk2.angle = this.angles[1];
+        this.imgDisk3.angle = this.angles[2];
+
         // TODO Pasue before opening
+
+        if (position.reduce((a, b) => a && b) != this.solved) {
+            this.solved = position.reduce((a, b) => a && b);
+            if (this.solved) {
+                this.imgSafeOpen.visible = true;
+                this.imgSurprise.visible = true;
+            } else {
+                this.imgSafeOpen.visible = false;
+                this.imgSurprise.visible = false;
+            }
+        }
+
     }
 
-    onclick(ev: MouseEvent): void { }
+    show() {
+        this.parent.stage.addChild(this.stage);
+        document.addEventListener("keypress", this.keypressListener);
+        this.parent.game.app.ticker.add(this.update);
+    }
+
+    hide() {
+        this.parent.stage.removeChild(this.stage);
+        document.removeEventListener("keypress", this.keypressListener);
+        this.parent.game.app.ticker.remove(this.update);
+    }
+
+    keypressListener = (e: KeyboardEvent) => { this.onkeypress(e) };
 
     onkeypress(ev: KeyboardEvent) {
+        if (ev.key === "q") {
+            this.hide();
+        }
         let num = Number(ev.key);
         if (!isNaN(num)) {
             this.combi[this.index++] = num;
@@ -117,6 +132,6 @@ export class Safe {
     }
 
     private digitToAngle(digit: number): number {
-        return (360 - digit * 36) * Math.PI / 180;
+        return 360 - digit * 36;
     }
 }
