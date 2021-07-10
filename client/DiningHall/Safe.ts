@@ -104,21 +104,26 @@ export class Safe {
     }
 
     show() {
-        this.parent.stage.addChild(this.stage);
+        this.parent.game.app.stage.removeChild(this.parent.stage);
+        this.parent.game.app.stage.addChild(this.stage);
         document.addEventListener("keypress", this.keypressListener);
         this.parent.game.app.ticker.add(this.update);
     }
 
     hide() {
-        this.parent.stage.removeChild(this.stage);
+        this.parent.game.app.stage.removeChild(this.stage);
+        this.parent.game.app.stage.addChild(this.parent.stage);
         document.removeEventListener("keypress", this.keypressListener);
         this.parent.game.app.ticker.remove(this.update);
+        
+
     }
 
     keypressListener = (e: KeyboardEvent) => { this.onkeypress(e) };
 
     onkeypress(ev: KeyboardEvent) {
         if (ev.key === "q") {
+            // TODO improve leaving
             this.hide();
         }
         let num = Number(ev.key);
