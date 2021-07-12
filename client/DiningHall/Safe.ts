@@ -46,6 +46,9 @@ export class Safe {
             this.imgIndicator = new PIXI.Sprite(resources.indicator.texture);
             this.imgSurprise = new PIXI.Sprite(resources.surprise.texture);
 
+            this.imgSurprise.scale.set(0.75);
+            this.imgSurprise.position.set(750, 450);
+
             // TODO: can we solve this without shifting?
             this.imgDisk1.pivot.set(978, 946);
             this.imgDisk2.pivot.set(978, 946);
