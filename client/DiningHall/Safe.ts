@@ -10,6 +10,8 @@ export class Safe {
     imgDisk3 = new PIXI.Sprite();
     imgIndicator = new PIXI.Sprite();
     imgSurprise = new PIXI.Sprite();
+    arrow = new PIXI.Sprite();
+    arrowBounding = new PIXI.Graphics();
     angles = [this.digitToAngle(0), this.digitToAngle(0), this.digitToAngle(0)];
     goals = [this.digitToAngle(0), this.digitToAngle(0), this.digitToAngle(0)];
     combi = [0, 0, 0];
@@ -22,10 +24,15 @@ export class Safe {
     game: Game;
     stage = new PIXI.Container();
 
-
     constructor(parent: DiningHall, game: Game) {
         this.parent = parent;
         this.game = game;
+
+        this.arrowBounding.hitArea = new PIXI.Polygon(game.config.ui.arrow.polygon);
+        this.arrowBounding.interactive = true;
+        this.arrowBounding.buttonMode = true;
+        this.arrowBounding.on("click", this.onclick);
+        this.stage.addChild(this.arrowBounding);
 
         let loader = new PIXI.Loader();
         // TODO: use config
@@ -35,7 +42,8 @@ export class Safe {
             .add("disk2", "images/Scheibe2.png")
             .add("disk3", "images/Scheibe3.png")
             .add("indicator", "images/Anzeige.png")
-            .add("surprise", "images/Doener_berlin_kraeuter.png");
+            .add("surprise", "images/Doener_berlin_kraeuter.png")
+            .add("arrow", game.config.ui.arrow.img);
 
         loader.load((loader, resources) => {
             this.imgSafe = new PIXI.Sprite(resources.safe.texture);
@@ -45,6 +53,7 @@ export class Safe {
             this.imgDisk3 = new PIXI.Sprite(resources.disk3.texture);
             this.imgIndicator = new PIXI.Sprite(resources.indicator.texture);
             this.imgSurprise = new PIXI.Sprite(resources.surprise.texture);
+            this.arrow = new PIXI.Sprite(resources.arrow.texture);
 
             this.imgSurprise.scale.set(0.75);
             this.imgSurprise.position.set(750, 450);
@@ -61,10 +70,7 @@ export class Safe {
             this.imgSafeOpen.visible = false;
             this.imgSurprise.visible = false;
 
-
-            this.stage.addChild(this.imgSafe, this.imgDisk1, this.imgDisk2, this.imgDisk3, this.imgIndicator);
-            this.stage.addChild(this.imgSafeOpen, this.imgSurprise);
-
+            this.stage.addChild(this.imgSafe, this.imgDisk1, this.imgDisk2, this.imgDisk3, this.imgIndicator, this.imgSafeOpen, this.imgSurprise, this.arrow);
         });
     }
 
@@ -118,17 +124,15 @@ export class Safe {
         this.parent.game.app.stage.addChild(this.parent.stage);
         document.removeEventListener("keypress", this.keypressListener);
         this.parent.game.app.ticker.remove(this.update);
-        
-
     }
 
     keypressListener = (e: KeyboardEvent) => { this.onkeypress(e) };
 
+    onclick = (data: PIXI.InteractionData) => {
+        this.hide();
+    }
+
     onkeypress(ev: KeyboardEvent) {
-        if (ev.key === "q") {
-            // TODO improve leaving
-            this.hide();
-        }
         let num = Number(ev.key);
         if (!isNaN(num)) {
             this.combi[this.index++] = num;
