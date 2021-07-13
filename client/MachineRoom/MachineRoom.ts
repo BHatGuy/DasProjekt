@@ -20,7 +20,7 @@ export class MachineRoom extends Room {
     }
 
     onclick = (data: PIXI.InteractionData) => {
-        this.game.nextRoom(RoomAlias.UpperHallway);
+        this.game.nextRoom(RoomAlias.LowerHallway);
     };
 
 }
