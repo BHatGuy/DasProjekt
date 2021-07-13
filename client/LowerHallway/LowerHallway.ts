@@ -54,6 +54,7 @@ export class LowerHallway extends Room {
             this.game.nextRoom(RoomAlias.UpperHallway);
         }
         if (data.target === this.door1) {
+            this.game.nextRoom(RoomAlias.MachineRoom);
         }
         if (data.target === this.door2) {
         }

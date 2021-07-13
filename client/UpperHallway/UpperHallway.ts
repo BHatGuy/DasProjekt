@@ -59,7 +59,6 @@ export class UpperHallway extends Room {
 
     onclickCallback = (data: PIXI.InteractionData) => {
         if (data.target === this.doorMachineRoom) {
-            this.game.nextRoom(RoomAlias.MachineRoom);
         }
         if (data.target === this.doorDiningHall) {
             this.game.nextRoom(RoomAlias.DiningHall);
@@ -70,20 +69,6 @@ export class UpperHallway extends Room {
             this.game.nextRoom(RoomAlias.LowerHallway);
         }
     };
-
-    // onmove(ev: MouseEvent) {
-    //     super.onmove(ev);
-    //     let point = this.scale(ev.offsetX, ev.offsetY);
-    //     // TODO Refactor those kind of things
-    //     if (this.doorMachineRoom.contains(point)
-    //         || this.doorDiningHall.contains(point)
-    //         || this.door2.contains(point)
-    //         || this.doorLowerHallway.contains(point)) {
-    //         this.canvas.style.cursor = "pointer";
-    //     } else {
-    //         this.canvas.style.cursor = "initial";
-    //     }
-    // }
 
 
 }
