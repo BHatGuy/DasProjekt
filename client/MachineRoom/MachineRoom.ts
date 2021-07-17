@@ -6,6 +6,8 @@ import * as PIXI from 'pixi.js';
 export class MachineRoom extends Room {
 
     doorBounding: PIXI.Graphics;
+    mechanic = new PIXI.Sprite();
+
 
     constructor(game: Game) {
         super(game, game.config.machineRoom.img);
@@ -16,7 +18,16 @@ export class MachineRoom extends Room {
         
         this.doorBounding.on("click", this.onclick);
         this.stage.addChild(this.doorBounding);
+
+
+        this.loader.add("mechanic", game.config.machineRoom.mechanic);
         this.loadResources();
+    }
+
+    saveResources(resources: any) {
+        super.saveResources(resources);
+        this.mechanic = new PIXI.Sprite(resources.mechanic.texture);
+        this.stage.addChild(this.mechanic);
     }
 
     onclick = (data: PIXI.InteractionData) => {
