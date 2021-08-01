@@ -48,7 +48,7 @@
         "door": [1527, 399, 1590,396,1772,473,1800,967,1535,977],
         "mechanic": "images/Maschinistin.png",
         "animation": {
-            "basename": "images/machineroom/Zeitleiste1_",
+            "basename": "images/machineroom/aniamtion",
             "extension": ".png",
             "count": 24
         }
