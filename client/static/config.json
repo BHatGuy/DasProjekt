@@ -46,7 +46,12 @@
     "machineRoom": {
         "img": "images/Maschinenraum.png",
         "door": [1527, 399, 1590,396,1772,473,1800,967,1535,977],
-        "mechanic": "images/Maschinistin.png"
+        "mechanic": "images/Maschinistin.png",
+        "animation": {
+            "basename": "images/machineroom/Zeitleiste1_",
+            "extension": ".png",
+            "count": 23
+        }
     },
     "lowerHallway": {
         "img": "images/Flur_unten.png",
