@@ -22,7 +22,7 @@ export class MachineRoom extends Room {
 
         // TODO use config file
         for (let i = 0; i < 24; i++) {
-            this.loader.add(`animation${i}`, `images/Zeitleiste1_${i}.png`);
+            this.loader.add(`animation${i}`, `images/machineroom/Zeitleiste1_${i}.png`);
         }
 
         this.loader.add("mechanic", game.config.machineRoom.mechanic);
