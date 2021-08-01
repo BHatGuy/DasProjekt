@@ -20,9 +20,8 @@ export class MachineRoom extends Room {
         this.doorBounding.on("click", this.onclick);
         this.stage.addChild(this.doorBounding);
 
-        // TODO use config file
-        for (let i = 0; i < 24; i++) {
-            this.loader.add(`animation${i}`, `images/machineroom/Zeitleiste1_${i}.png`);
+        for (let i = 0; i < game.config.machineRoom.animation.count; i++) {
+            this.loader.add(`animation${i}`, game.config.machineRoom.animation.basename + String(i) + game.config.machineRoom.animation.extension);
         }
 
         this.loader.add("mechanic", game.config.machineRoom.mechanic);
@@ -34,7 +33,7 @@ export class MachineRoom extends Room {
         this.mechanic = new PIXI.Sprite(resources.mechanic.texture);
         this.stage.addChild(this.mechanic);
         let frames: Array<PIXI.Texture> = [];
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < this.game.config.machineRoom.animation.count; i++) {
             frames.push(resources[`animation${i}`].texture)
         }
         this.animation = new PIXI.AnimatedSprite(frames);

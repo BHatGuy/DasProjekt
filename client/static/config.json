@@ -50,7 +50,7 @@
         "animation": {
             "basename": "images/machineroom/Zeitleiste1_",
             "extension": ".png",
-            "count": 23
+            "count": 24
         }
     },
     "lowerHallway": {
