@@ -17,4 +17,6 @@ Alles laufen lassen und bei Änderungen neu bauen:
 - rescale
 
 
+# Links
 https://www.image-map.net/
+https://pixijs.download/release/docs/PIXI.html
