@@ -41,7 +41,8 @@
             "img": "images/Cockpit_nurLampe.png",
             "x": 190, 
             "y": 0
-        }
+        },
+        "smallBook": [1628,1253,1781,1230,1853,1242,1870,1266,1887,1278,1938,1283,1972,1306,1984,1321,1847,1359]
     },
     "machineRoom": {
         "img": "images/Maschinenraum.png",
