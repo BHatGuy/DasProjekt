@@ -29,7 +29,7 @@ export class Cockpit extends Room {
             .add("drawer1", game.config.cockpit.drawer1.img)
             .add("drawer2", game.config.cockpit.drawer2.img)
             .add("drawer3", game.config.cockpit.drawer3.img)
-            .add("book", "images/Buch.png")
+            .add("book", game.config.cockpit.book)
             .add("arrow", game.config.ui.arrow.img);
 
         this.ladderBounding = new PIXI.Graphics();
