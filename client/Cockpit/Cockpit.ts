@@ -19,6 +19,8 @@ export class Cockpit extends Room {
     smallBook: PIXI.Graphics;
     book = new PIXI.Sprite();
     arrow = new PIXI.Sprite();
+    page1: PIXI.Text;
+    page2: PIXI.Text;
 
     bookStage = new PIXI.Container();
 
@@ -29,7 +31,7 @@ export class Cockpit extends Room {
             .add("drawer1", game.config.cockpit.drawer1.img)
             .add("drawer2", game.config.cockpit.drawer2.img)
             .add("drawer3", game.config.cockpit.drawer3.img)
-            .add("book", game.config.cockpit.book)
+            .add("book", game.config.cockpit.book.img)
             .add("arrow", game.config.ui.arrow.img);
 
         this.ladderBounding = new PIXI.Graphics();
@@ -63,10 +65,19 @@ export class Cockpit extends Room {
         this.drawer1Open.on("click", this.onclick);
 
         this.smallBook = new PIXI.Graphics();
-        this.smallBook.hitArea = new PIXI.Polygon(game.config.cockpit.smallBook);
+        this.smallBook.hitArea = new PIXI.Polygon(game.config.cockpit.book.small);
         this.smallBook.interactive = true;
         this.smallBook.buttonMode = true;
         this.smallBook.on("click", this.onclick);
+
+        let style = new PIXI.TextStyle(game.config.cockpit.book.style);
+        this.page1 = new PIXI.Text(game.config.cockpit.book.page1.text, style);
+        this.page1.position.set(...game.config.cockpit.book.page1.pos);
+        this.page1.angle = game.config.cockpit.book.page1.angle;
+
+        this.page2 = new PIXI.Text(game.config.cockpit.book.page2.text, style);
+        this.page2.position.set(...game.config.cockpit.book.page2.pos);
+        this.page2.angle = game.config.cockpit.book.page2.angle;
 
         this.stage.addChild(this.ladderBounding, this.drawer1Bounding, this.drawer2Bounding, this.drawer3Bounding);
 
@@ -109,7 +120,7 @@ export class Cockpit extends Room {
         this.arrow.buttonMode = true;
         this.arrow.on("click", this.onclick);
         this.book = new PIXI.Sprite(resources.book.texture);
-        this.bookStage.addChild(this.book, this.arrow);
+        this.bookStage.addChild(this.book, this.arrow, this.page1, this.page2);
 
     }
 

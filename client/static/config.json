@@ -42,8 +42,26 @@
             "x": 190, 
             "y": 0
         },
-        "book": "images/Buch.png",
-        "smallBook": [1628,1253,1781,1230,1853,1242,1870,1266,1887,1278,1938,1283,1972,1306,1984,1321,1847,1359]
+        "book": {
+            "img": "images/Buch.png",
+            "small": [1628,1253,1781,1230,1853,1242,1870,1266,1887,1278,1938,1283,1972,1306,1984,1321,1847,1359],
+            "style": {
+                "fontFamily": "Bosk",
+                "fontSize": 40,
+                "wordWrap": true,
+                "wordWrapWidth": 540
+            },
+            "page1": {
+                "text":"1. Januar  1902\nHeute traf ich Viktor aus Indien. Er berichtete mir von einem fürchertlichen Echo in dem Theater, in welchem er Romeo und Julia sah.\n\n2. März 1888\nHeute konnte ich einen guten Handel mit den Zulu abschließen. Ich konnte unseren Whiskey gegen einige Stammesmasken eintauschen. Bei einem Fest am Abend konnte man das Echo der Viktoriafälle noch bis ins Dorf hören, in dem wir einige Händler aus Indien trafen.",
+                "pos": [516, 444],
+                "angle": -9
+            },
+            "page2": {
+                "text":"3. Oktober 1893\nMittlerweile kenne ich die tricks dieses Gauners von Alfa bis Omega: Charlie  wollte mich heute wieder einmal reinlegen als ich ihn der Lobby meines Hotel s traf. Am Abend versöhnten wir uns jedoch wieder beim Tango.",
+                "pos": [1191, 350],
+                "angle": -9
+            }
+        }
     },
     "machineRoom": {
         "img": "images/Maschinenraum.png",
