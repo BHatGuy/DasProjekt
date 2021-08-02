@@ -33,7 +33,7 @@ export class Game {
             [RoomAlias.UpperHallway]: new UpperHallway(this),
             [RoomAlias.LowerHallway]: new LowerHallway(this)
         }
-        this.currentRoom = this.rooms[RoomAlias.Cockpit];
+        this.currentRoom = this.rooms[RoomAlias.UpperHallway];
         this.currentRoom.activate();
 
         // Animated Background:
