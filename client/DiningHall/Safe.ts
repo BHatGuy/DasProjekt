@@ -36,13 +36,13 @@ export class Safe {
 
         let loader = new PIXI.Loader();
         // TODO: use config
-        loader.add("safe", "images/Safe.png")
-            .add("safeOpen", "images/Safe_offen.png")
-            .add("disk1", "images/Scheibe1.png")
-            .add("disk2", "images/Scheibe2.png")
-            .add("disk3", "images/Scheibe3.png")
-            .add("indicator", "images/Anzeige.png")
-            .add("surprise", "images/Doener_berlin_kraeuter.png")
+        loader.add("safe", game.config.safe.safe)
+            .add("safeOpen", game.config.safe.open)
+            .add("disk1", game.config.safe.disk1)
+            .add("disk2", game.config.safe.disk2)
+            .add("disk3", game.config.safe.disk3)
+            .add("indicator", game.config.safe.indicator)
+            .add("surprise", game.config.safe.surprise)
             .add("arrow", game.config.ui.arrow.img);
 
         loader.load((loader, resources) => {

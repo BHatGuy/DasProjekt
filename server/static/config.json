@@ -4,46 +4,46 @@
     "global": {},
     "ui": {
         "arrow": {
-            "img": "images/arrow.png",
+            "img": "static/images/arrow.png",
             "polygon": [176,1580,269,1586,267,1660,167,1660,157,1709,83,1618,167,1543]
         }
     },
     "diningHall": {
-        "img": "images/Speisesaal.png",
+        "img": "static/images/Speisesaal.png",
         "door": [1743,184,2050,174,2080,685,1993,714,1927,736,1895,770,1887,829,1760,820],
         "safe": [2150, 155, 2330, 155, 2330, 420, 2150, 420],
         "glass": [1476,1128,1507,1132,1505,1221,1480,1217],
         "graf": {
-            "img": "images/Graf.png"
+            "img": "static/images/Graf.png"
         }
     },
     "cockpit": {
-        "img": "images/Cockpit.png",
+        "img": "static/images/Cockpit.png",
         "ladder": {
             "poly": [0, 0, 260, 0, 260, 1800, 0, 1800]
         },
         "drawer1":{
             "poly": [1726,1083,2160,1300,2169,1452,1726,1242],
             "open": [1400,1160,1835,1374,1835,1531,1405,1314],
-            "img" :"images/Schublade_1.png"
+            "img" :"static/images/Schublade_1.png"
         },
         "drawer2":{
             "poly": [1728,1300,2148,1501,2148,1626,1726,1410],
             "open": [1405,1365,1831,1573,1827,1705,1398,1507],
-            "img" :"images/Schublade_2.png"
+            "img" :"static/images/Schublade_2.png"
         },
         "drawer3":{
             "poly": [1735,1454,2157,1673,2161,1794,2062,1798,1735,1575],
             "open": [1409,1524,1837,1747,1837,1798,1642,1798,1409,1675],
-            "img" :"images/Schublade_3.png"
+            "img" :"static/images/Schublade_3.png"
         },
         "lamp": {
-            "img": "images/Cockpit_nurLampe.png",
+            "img": "static/images/Cockpit_nurLampe.png",
             "x": 190, 
             "y": 0
         },
         "book": {
-            "img": "images/Buch.png",
+            "img": "static/images/Buch.png",
             "small": [1628,1253,1781,1230,1853,1242,1870,1266,1887,1278,1938,1283,1972,1306,1984,1321,1847,1359],
             "style": {
                 "fontFamily": "Bosk",
@@ -62,33 +62,43 @@
                 "angle": -9
             }
         }
+        
+    },
+    "safe": {
+        "safe": "/static/images/Safe.png",
+        "open": "/static/images/Safe_offen.png",
+        "disk1": "/static/images/Scheibe1.png",
+        "disk2": "/static/images/Scheibe2.png",
+        "disk3": "/static/images/Scheibe3.png",
+        "indicator": "/static/images/Anzeige.png",
+        "surprise": "/static/images/Doener_berlin_kraeuter.png"
     },
     "machineRoom": {
-        "img": "images/Maschinenraum.png",
+        "img": "static/images/Maschinenraum.png",
         "door": [1527, 399, 1590,396,1772,473,1800,967,1535,977],
-        "mechanic": "images/Maschinistin.png",
+        "mechanic": "static/images/Maschinistin.png",
         "animation": {
-            "basename": "images/machineroom/animation",
+            "basename": "static/images/machineroom/animation",
             "extension": ".png",
             "count": 24
         }
     },
     "lowerHallway": {
-        "img": "images/Flur_unten.png",
+        "img": "static/images/Flur_unten.png",
         "doorCockpit": [1495,630,1656,666,1700,721,1707,1115,1666,1136,1450,1136,1448,672],
         "door1": [193,513,233,1510,528,1391,490,517],
         "door2": [681,524,702,1323,946,1230,927,524],
         "doorUpperHallway": [1921,1365,2006,1353,2355,1353,2362,1376,2394,1372,2392,823,2292,553,2090,339,1978,261,1293,280,1181,282,1204,367,1172,437,1365,466,1527,543,1669,672,1760,782,1870,977,1927,1177]
     },
     "upperHallway": {
-        "img": "images/Flur.png",
+        "img": "static/images/Flur.png",
         "doorMachineRoom": [100,494,382,488,428,1516,108,1671],
         "doorDiningHall": [659,511,910,526,941,1298,700,1401],
         "door2": [1168,536,1357,536,1382,1092,1202,1175],
         "doorLowerHallway": [1461,848,1408,890,1408,935,1448,960,1486,965,1486,1257,2396,1251,2396,825]
     },
     "background": {
-        "sea": "images/Meer.png",
-        "clouds": "images/Meer_bewegliche_Teile.png"
+        "sea": "static/images/Meer.png",
+        "clouds": "static/images/Meer_bewegliche_Teile.png"
     }
 }

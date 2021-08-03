@@ -1,6 +1,6 @@
 .vscode
 
-build
+bundle.js
 
 
 ### https://github.com/github/gitignore/blob/master/Node.gitignore
@@ -121,3 +121,22 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+
+
+venv/
+
+*.pyc
+__pycache__/
+
+instance/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+dist/
+build/
+*.egg-info/
+

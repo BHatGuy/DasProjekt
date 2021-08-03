@@ -1,29 +1,25 @@
+export FLASK_APP := "server"
+export FLASK_ENV := "development"
+
 all: 
     just backend & 
     just watch
 
 build: check-types
-    browserify client/index.ts -p [ tsify --noImplicitAny ] -o build/bundle.js 
-    cp -r client/static/* build/
-    -rm build/*tmp*
+    browserify client/index.ts -p [ tsify --noImplicitAny ] -o server/static/bundle.js
+    -rm server/static/*tmp*
 
 check-types:
     tsc --noEmit
 
-serve: 
-    python -m http.server --directory build/
 
 backend: 
-    python server/server.py
+    flask run
 
 watch: 
-    just serve &
-    watchexec --on-busy-update restart -i build -e ts,html,css,json just build
+    watchexec --on-busy-update restart -i server -e ts,html,css,json just build
 
 clean:
-    rm -rf build/
+    rm -rf server/static/bundle.js
 
-# this does not deploy the backend currently
-deploy: clean build
-    rsync  -avz build/* root@dasprojekt.ddnss.de:/var/www/html
-#TODO deploy backend here
+

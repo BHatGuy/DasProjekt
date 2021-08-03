@@ -6,23 +6,24 @@ import { LowerHallway } from "./LowerHallway/LowerHallway";
 import { UpperHallway } from "./UpperHallway/UpperHallway";
 import { Background } from "./Background";
 import * as PIXI from 'pixi.js'
+import { io, Socket } from "socket.io-client"
 
 
 export class Game {
     app: PIXI.Application;
     background: PIXI.Application;
     messageQueue: MessageEvent<any>[] = [];
-    socket: WebSocket;
+    socket: Socket;
     rooms: Record<RoomAlias, Room>;
     currentRoom: Room;
     config: any;
 
-    constructor(app: PIXI.Application, socket: WebSocket, config: any, background: PIXI.Application) {
+    constructor(app: PIXI.Application, socket: Socket, config: any, background: PIXI.Application) {
         this.config = config;
         this.socket = socket;
         this.app = app;
         this.background = background;
-        this.socket.onmessage = this.receive;
+        this.socket.on("data", (data) => {this.receive(data)});
 
         app.stage.scale.set(app.view.width / config.width, app.view.height / config.height)
 
