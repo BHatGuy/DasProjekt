@@ -5,15 +5,25 @@
 import asyncio
 import websockets
 import logging as log
+import json
 
 log.basicConfig(level=log.INFO)
 clients = set()
 
+async def sendall(message):
+    for client in clients:
+        await client.send(message)
+
 async def main(websocket, path):
     log.info(f"client connected {websocket.remote_address}")
-    log.info(websocket.request_headers)
+    clients.add(websocket)
+    
     async for message in websocket:
-        pass
+        data = json.loads(message)
+        if data["action"] == "glass":
+            await sendall(json.dumps({"action": "baron"}))
+
+    clients.remove(websocket)
     log.info(f"client disconnected {websocket.remote_address}")
 
 

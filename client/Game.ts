@@ -22,7 +22,7 @@ export class Game {
         this.socket = socket;
         this.app = app;
         this.background = background;
-        this.socket.onmessage = this.receive;
+        this.socket.onmessage = (e: MessageEvent) => {this.receive(e)};
 
         app.stage.scale.set(app.view.width / config.width, app.view.height / config.height)
 
@@ -57,8 +57,12 @@ export class Game {
 
 
     receive(msg: MessageEvent<any>) {
-        console.log(msg.data);
-        this.messageQueue.push(msg);
+        let data = JSON.parse(msg.data)
+        console.log(data);
+        if (data.action == "baron"){
+            let dh = this.rooms[RoomAlias.DiningHall] as DiningHall;
+            dh.toggleBaron();
+        }
     }
 
 

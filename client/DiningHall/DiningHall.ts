@@ -56,8 +56,12 @@ export class DiningHall extends Room {
             this.safe.show();
         }
         if (data.target == this.glassBounding) {
-            this.grafImg.visible = !this.grafImg.visible;
+            this.game.socket.send(JSON.stringify({action: "glass"}))
         }
+    }
+
+    toggleBaron() {
+        this.grafImg.visible = !this.grafImg.visible;
     }
 
 
