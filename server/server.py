@@ -4,13 +4,14 @@
 
 import asyncio
 import websockets
-import random
+import logging
 
+logging.basicConfig(level=logging.INFO)
 
 async def main(websocket, path):
-    # register(websocket) sends user_event() to websocket
+    logging.info(f"connected {path}")
     async for message in websocket:
-        print(message)
+        pass
         
 
 

@@ -2,16 +2,17 @@ all:
     just backend & 
     just watch
 
-build: check-types
+@build: check-types
     browserify client/index.ts -p [ tsify --noImplicitAny ] -o build/bundle.js 
     cp -r client/static/* build/
-    -rm build/*tmp*
+    -rm build/*tmp* 2> /dev/null
+    echo "build ready"
 
-check-types:
+@check-types:
     tsc --noEmit
 
 serve: 
-    python -m http.server --directory build/
+    python -m http.server --directory build/ &> /dev/null
 
 backend: 
     python server/server.py
