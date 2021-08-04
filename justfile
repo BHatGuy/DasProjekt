@@ -27,4 +27,5 @@ clean:
 # this does not deploy the backend currently
 deploy: clean build
     rsync  -avz build/* root@dasprojekt.ddnss.de:/var/www/html
-#TODO deploy backend here
+    rsync  -avz server root@dasprojekt.ddnss.de:~/
+#TODO restart backend here

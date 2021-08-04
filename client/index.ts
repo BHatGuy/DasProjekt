@@ -7,7 +7,7 @@ import * as PIXI from 'pixi.js'
 window.onload = init;
 
 function init() {
-    let socket = new WebSocket("ws://localhost:6789");
+    let socket = new WebSocket("ws://dasprojekt.ddnss.de:6789");
 
     let height = window.innerHeight - 100;
     let width = (window.innerHeight - 100) * (4 / 3);
