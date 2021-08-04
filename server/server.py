@@ -4,15 +4,17 @@
 
 import asyncio
 import websockets
-import logging
+import logging as log
 
-logging.basicConfig(level=logging.INFO)
+log.basicConfig(level=log.INFO)
+clients = set()
 
 async def main(websocket, path):
-    logging.info(f"connected {path}")
+    log.info(f"client connected {websocket.remote_address}")
+    log.info(websocket.request_headers)
     async for message in websocket:
         pass
-        
+    log.info(f"client disconnected {websocket.remote_address}")
 
 
 start_server = websockets.serve(main, "localhost", 6789)

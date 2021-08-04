@@ -8,6 +8,9 @@ window.onload = init;
 
 function init() {
     let socket = new WebSocket("ws://localhost:6789");
+    socket.onopen = (e: Event) => {
+        socket.send("connected");
+    }
 
     let height = window.innerHeight - 100;
     let width = (window.innerHeight - 100) * (4 / 3);
