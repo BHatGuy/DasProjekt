@@ -12,7 +12,15 @@ log.basicConfig(
     format='%(asctime)s.%(msecs)03d %(levelname)s: %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
 )
+
+
+class State:
+    def __init__(self) -> None:
+        self.baron = False
+
+
 clients = set()
+state = State()
 
 
 async def sendall(message):
@@ -23,14 +31,17 @@ async def sendall(message):
 async def main(websocket, path):
     log.info(f"client connected {websocket.remote_address}")
     clients.add(websocket)
-
-    async for message in websocket:
-        data = json.loads(message)
-        if data["action"] == "glass":
-            await sendall(json.dumps({"action": "baron"}))
-
-    clients.remove(websocket)
-    log.info(f"client disconnected {websocket.remote_address}")
+    try:
+        async for message in websocket:
+            data = json.loads(message)
+            if data["action"] == "glass":
+                state.baron = not state.baron
+                await sendall(json.dumps({"action": "baron"}))
+            elif data["action"] == "getstate":
+                await websocket.send(json.dumps(state.__dict__))
+    finally:
+        clients.remove(websocket)
+        log.info(f"client disconnected {websocket.remote_address}")
 
 
 start_server = websockets.serve(main, "0.0.0.0", 6789)

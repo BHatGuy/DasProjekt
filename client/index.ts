@@ -7,12 +7,13 @@ import * as PIXI from 'pixi.js'
 window.onload = init;
 
 function init() {
+    // let socket = new WebSocket("ws://localhost:6789");
     let socket = new WebSocket("ws://dasprojekt.ddnss.de:6789");
 
     let height = window.innerHeight - 100;
     let width = (window.innerHeight - 100) * (4 / 3);
-    let app = new PIXI.Application({height: height, width: width, antialias: true});
-    let background = new PIXI.Application({resizeTo: window});
+    let app = new PIXI.Application({ height: height, width: width, antialias: true });
+    let background = new PIXI.Application({ resizeTo: window });
     let config: any;
     document.body.appendChild(app.view);
     document.body.appendChild(background.view);
