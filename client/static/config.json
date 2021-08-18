@@ -87,6 +87,14 @@
         "door2": [1168,536,1357,536,1382,1092,1202,1175],
         "doorLowerHallway": [1461,848,1408,890,1408,935,1448,960,1486,965,1486,1257,2396,1251,2396,825]
     },
+    "kitchen": {
+        "img": "images/Kombüse.png",
+        "plants": {
+            "img":"images/Kombüse_Pflanzen.png",
+            "poly":[1141,167,1139,350,1302,343,1306,284,1389,407,1522,307,1412,153,1304,220,1304,161]
+        },
+        "door": [2103,310,2143,1520,2398,1527,2396,305]
+    },
     "background": {
         "sea": "images/Meer.png",
         "clouds": "images/Meer_bewegliche_Teile.png"

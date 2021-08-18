@@ -4,6 +4,7 @@ import { Room, RoomAlias } from "./Room";
 import { MachineRoom } from "./MachineRoom/MachineRoom";
 import { LowerHallway } from "./LowerHallway/LowerHallway";
 import { UpperHallway } from "./UpperHallway/UpperHallway";
+import { Kitchen } from "./Kitchen/Kitchen"
 import { Background } from "./Background";
 import * as PIXI from 'pixi.js'
 
@@ -31,7 +32,8 @@ export class Game {
             [RoomAlias.Cockpit]: new Cockpit(this),
             [RoomAlias.MachineRoom]: new MachineRoom(this),
             [RoomAlias.UpperHallway]: new UpperHallway(this),
-            [RoomAlias.LowerHallway]: new LowerHallway(this)
+            [RoomAlias.LowerHallway]: new LowerHallway(this),
+            [RoomAlias.Kitchen]: new Kitchen(this)
         }
         this.currentRoom = this.rooms[RoomAlias.UpperHallway];
         this.currentRoom.activate();

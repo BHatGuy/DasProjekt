@@ -6,7 +6,7 @@ import * as PIXI from 'pixi.js';
 
 export class UpperHallway extends Room {
 
-    doorMachineRoom: PIXI.Graphics;
+    doorKitchen: PIXI.Graphics;
     doorDiningHall: PIXI.Graphics;
     door2: PIXI.Graphics;
     doorLowerHallway: PIXI.Graphics;
@@ -21,10 +21,10 @@ export class UpperHallway extends Room {
         this.doorDiningHall.interactive = true;
         this.doorDiningHall.buttonMode = true;
 
-        this.doorMachineRoom = new PIXI.Graphics();
-        this.doorMachineRoom.hitArea = new PIXI.Polygon(game.config.upperHallway.doorMachineRoom);
-        this.doorMachineRoom.interactive = true;
-        this.doorMachineRoom.buttonMode = true;
+        this.doorKitchen = new PIXI.Graphics();
+        this.doorKitchen.hitArea = new PIXI.Polygon(game.config.upperHallway.doorMachineRoom);
+        this.doorKitchen.interactive = true;
+        this.doorKitchen.buttonMode = true;
 
         this.door2 = new PIXI.Graphics();
         this.door2.hitArea = new PIXI.Polygon(game.config.upperHallway.door2);
@@ -36,7 +36,7 @@ export class UpperHallway extends Room {
         this.doorLowerHallway.interactive = true;
         this.doorLowerHallway.buttonMode = true;
 
-        this.stage.addChild(this.doorDiningHall, this.doorMachineRoom, this.door2, this.doorLowerHallway);
+        this.stage.addChild(this.doorDiningHall, this.doorKitchen, this.door2, this.doorLowerHallway);
 
         this.loadResources();
     }
@@ -44,7 +44,7 @@ export class UpperHallway extends Room {
     activate() {
         super.activate();
         this.doorDiningHall.on("click", this.onclickCallback);
-        this.doorMachineRoom.on("click", this.onclickCallback);
+        this.doorKitchen.on("click", this.onclickCallback);
         this.door2.on("click", this.onclickCallback);
         this.doorLowerHallway.on("click", this.onclickCallback);
     }
@@ -52,13 +52,14 @@ export class UpperHallway extends Room {
     deactivate() {
         super.deactivate();
         this.doorDiningHall.off("click", this.onclickCallback);
-        this.doorMachineRoom.off("click", this.onclickCallback);
+        this.doorKitchen.off("click", this.onclickCallback);
         this.door2.off("click", this.onclickCallback);
         this.doorLowerHallway.off("click", this.onclickCallback);
     }
 
     onclickCallback = (data: PIXI.InteractionData) => {
-        if (data.target === this.doorMachineRoom) {
+        if (data.target === this.doorKitchen) {
+            this.game.nextRoom(RoomAlias.Kitchen);
         }
         if (data.target === this.doorDiningHall) {
             this.game.nextRoom(RoomAlias.DiningHall);

@@ -7,6 +7,7 @@ export enum RoomAlias {
     MachineRoom,
     UpperHallway,
     LowerHallway,
+    Kitchen,
 }
 
 export class Room {
