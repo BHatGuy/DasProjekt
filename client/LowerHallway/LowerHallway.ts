@@ -6,14 +6,17 @@ export class LowerHallway extends Room {
 
     trapdoorBounding: PIXI.Graphics;
     trapdoorOpen = new PIXI.Sprite();
+    trapdoorClosed = new PIXI.Sprite();
     door1: PIXI.Graphics;
     door2: PIXI.Graphics;
     doorUpperHallway: PIXI.Graphics;
+    lock: PIXI.Graphics;
 
     constructor(game: Game) {
         super(game, game.config.lowerHallway.img);
 
-        this.loader.add("trapdoorOpen", game.config.lowerHallway.trapdoor.img)
+        this.loader.add("trapdoorOpen", game.config.lowerHallway.trapdoor.open)
+        this.loader.add("trapdoorClosed", game.config.lowerHallway.trapdoor.closed)
 
         this.door1 = new PIXI.Graphics();
         this.door1.hitArea = new PIXI.Polygon(game.config.lowerHallway.door1);
@@ -23,7 +26,7 @@ export class LowerHallway extends Room {
 
         this.trapdoorBounding = new PIXI.Graphics();
         this.trapdoorBounding.hitArea = new PIXI.Polygon(game.config.lowerHallway.trapdoor.poly);
-        this.trapdoorBounding.interactive = true;
+        this.trapdoorBounding.interactive = false;
         this.trapdoorBounding.buttonMode = true;
         this.stage.addChild(this.trapdoorBounding);
 
@@ -39,6 +42,13 @@ export class LowerHallway extends Room {
         this.doorUpperHallway.buttonMode = true;
         this.stage.addChild(this.doorUpperHallway);
 
+        this.lock = new PIXI.Graphics();
+        this.lock.hitArea = new PIXI.Polygon(game.config.lowerHallway.trapdoor.lock);
+        this.lock.interactive = true;
+        this.lock.buttonMode = true;
+        this.stage.addChild(this.lock);
+
+        this.lock.on("click", this.onclick)
         this.door1.on("click", this.onclick);
         this.door2.on("click", this.onclick);
         this.trapdoorBounding.on("click", this.onclick);
@@ -50,7 +60,8 @@ export class LowerHallway extends Room {
     saveResources(resources: any) {
         super.saveResources(resources);
         this.trapdoorOpen = new PIXI.Sprite(resources.trapdoorOpen.texture);
-        this.stage.addChild(this.trapdoorOpen);
+        this.trapdoorClosed = new PIXI.Sprite(resources.trapdoorClosed.texture);
+        this.stage.addChild(this.trapdoorClosed);
 
     }
 
@@ -68,6 +79,13 @@ export class LowerHallway extends Room {
             this.game.nextRoom(RoomAlias.MachineRoom);
         }
         if (data.target === this.door2) {
+        }
+        if (data.target === this.lock) {
+            // TODO Ask for code here
+            this.lock.interactive = false;
+            this.stage.removeChild(this.trapdoorClosed);
+            this.stage.addChild(this.trapdoorOpen);
+            this.trapdoorBounding.interactive = true;
         }
     };
 
