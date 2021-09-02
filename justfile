@@ -6,7 +6,7 @@ all:
     browserify client/index.ts -p [ tsify --noImplicitAny ] -o build/bundle.js 
     cp -r client/static/* build/
     -rm build/*tmp* 2> /dev/null
-    echo "build ready"
+    echo $(date +%H:%M:%S) "build ready"
 
 @check-types:
     tsc --noEmit
