@@ -21,11 +21,10 @@ export class MachineRoom extends Room {
         this.stage.addChild(this.doorBounding);
 
         for (let i = 0; i < game.config.machineRoom.animation.count; i++) {
-            this.loader.add(`animation${i}`, game.config.machineRoom.animation.basename + String(i) + game.config.machineRoom.animation.extension);
+            game.app.loader.add(`animation${i}`, game.config.machineRoom.animation.basename + String(i) + game.config.machineRoom.animation.extension);
         }
 
-        this.loader.add("mechanic", game.config.machineRoom.mechanic);
-        this.loadResources();
+        game.app.loader.add("mechanic", game.config.machineRoom.mechanic);
     }
 
     saveResources(resources: any) {

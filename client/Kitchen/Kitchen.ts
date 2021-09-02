@@ -24,11 +24,7 @@ export class Kitchen extends Room {
         this.plantsSmall.interactive = true;
         this.plantsSmall.buttonMode = true;
         this.plantsSmall.on("click", this.onclick);
-        this.loader.add("plants", game.config.kitchen.plants.img)
-            .add("arrow", game.config.ui.arrow.img);
-
-
-        this.loadResources();
+        game.app.loader.add("plants", game.config.kitchen.plants.img);
     }
 
     saveResources(resources: any) {

@@ -15,8 +15,8 @@ export class LowerHallway extends Room {
     constructor(game: Game) {
         super(game, game.config.lowerHallway.img);
 
-        this.loader.add("trapdoorOpen", game.config.lowerHallway.trapdoor.open)
-        this.loader.add("trapdoorClosed", game.config.lowerHallway.trapdoor.closed)
+        game.app.loader.add("trapdoorOpen", game.config.lowerHallway.trapdoor.open)
+        game.app.loader.add("trapdoorClosed", game.config.lowerHallway.trapdoor.closed)
 
         this.door1 = new PIXI.Graphics();
         this.door1.hitArea = new PIXI.Polygon(game.config.lowerHallway.door1);
@@ -53,8 +53,6 @@ export class LowerHallway extends Room {
         this.door2.on("click", this.onclick);
         this.trapdoorBounding.on("click", this.onclick);
         this.doorUpperHallway.on("click", this.onclick);
-
-        this.loadResources();
     }
 
     saveResources(resources: any) {

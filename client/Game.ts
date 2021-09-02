@@ -1,6 +1,6 @@
 import { DiningHall } from "./DiningHall/DiningHall";
 import { Cockpit } from "./Cockpit/Cockpit";
-import { Room, RoomAlias } from "./Room";
+import { Room, RoomAlias, roomAliases } from "./Room";
 import { MachineRoom } from "./MachineRoom/MachineRoom";
 import { LowerHallway } from "./LowerHallway/LowerHallway";
 import { UpperHallway } from "./UpperHallway/UpperHallway";
@@ -35,6 +35,16 @@ export class Game {
             [RoomAlias.LowerHallway]: new LowerHallway(this),
             [RoomAlias.Kitchen]: new Kitchen(this)
         }
+        app.loader.add("arrow", config.ui.arrow.img);
+
+        app.loader.load((loader, resources) => {
+            // TODO: do this more elegant
+            for (let i = 0; i < roomAliases.length; i++) {
+                const room = this.rooms[roomAliases[i]];
+                room.saveResources(resources);
+            }
+        });
+
         this.currentRoom = this.rooms[RoomAlias.UpperHallway];
         this.currentRoom.activate();
 

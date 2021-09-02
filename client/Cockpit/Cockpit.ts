@@ -27,12 +27,11 @@ export class Cockpit extends Room {
     constructor(game: Game) {
         super(game, game.config.cockpit.img);
 
-        this.loader.add("lamp", game.config.cockpit.lamp.img)
+        game.app.loader.add("lamp", game.config.cockpit.lamp.img)
             .add("drawer1", game.config.cockpit.drawer1.img)
             .add("drawer2", game.config.cockpit.drawer2.img)
             .add("drawer3", game.config.cockpit.drawer3.img)
-            .add("book", game.config.cockpit.book.img)
-            .add("arrow", game.config.ui.arrow.img);
+            .add("book", game.config.cockpit.book.img);
 
         this.ladderBounding = new PIXI.Graphics();
         this.ladderBounding.hitArea = new PIXI.Polygon(game.config.cockpit.ladder.poly);
@@ -81,7 +80,6 @@ export class Cockpit extends Room {
 
         this.stage.addChild(this.ladderBounding, this.drawer1Bounding, this.drawer2Bounding, this.drawer3Bounding);
 
-        this.loadResources();
     }
 
     saveResources(resources: any) {

@@ -38,7 +38,6 @@ export class UpperHallway extends Room {
 
         this.stage.addChild(this.doorDiningHall, this.doorKitchen, this.door2, this.doorLowerHallway);
 
-        this.loadResources();
     }
 
     activate() {

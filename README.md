@@ -7,6 +7,7 @@
 - Refactor popup 
 - Singel Canvas?
 - rescale
+- font
 
 
 # Links

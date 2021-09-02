@@ -36,6 +36,7 @@ export class Safe {
 
         let loader = new PIXI.Loader();
         // TODO: use config
+        // TODO: use gloabl loader
         loader.add("safe", "images/Safe.png")
             .add("safeOpen", "images/Safe_offen.png")
             .add("disk1", "images/Scheibe1.png")

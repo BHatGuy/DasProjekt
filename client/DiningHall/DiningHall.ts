@@ -31,12 +31,11 @@ export class DiningHall extends Room {
         this.glassBounding.interactive = true;
         this.glassBounding.buttonMode = true;
         this.glassBounding.on("click", this.onclick);
-        
+
         this.stage.addChild(this.doorBounding, this.safeBounding, this.glassBounding);
 
-        this.loader.add("graf", game.config.diningHall.graf.img);
+        game.app.loader.add("graf", game.config.diningHall.graf.img);
 
-        this.loadResources();
 
         this.safe = new Safe(this, game);
     }
