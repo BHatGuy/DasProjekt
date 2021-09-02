@@ -36,9 +36,9 @@ async def main(websocket, path):
             data = json.loads(message)
             if data["action"] == "glass":
                 state.baron = not state.baron
-                await sendall(json.dumps({"action": "baron"}))
+                await sendall(json.dumps({"action": "baron", "baron": state.baron}))
             elif data["action"] == "getstate":
-                await websocket.send(json.dumps(state.__dict__))
+                await websocket.send(json.dumps({"action": "state", "state": state.__dict__}))
     finally:
         clients.remove(websocket)
         log.info(f"client disconnected {websocket.remote_address}")

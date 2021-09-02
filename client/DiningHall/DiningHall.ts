@@ -43,7 +43,6 @@ export class DiningHall extends Room {
     saveResources(resources: any) {
         super.saveResources(resources);
         this.grafImg = new PIXI.Sprite(resources.graf.texture);
-        this.grafImg.visible = false;
         this.stage.addChild(this.grafImg);
     }
 
@@ -55,12 +54,17 @@ export class DiningHall extends Room {
             this.safe.show();
         }
         if (data.target == this.glassBounding) {
-            this.game.socket.send(JSON.stringify({action: "glass"}))
+            this.game.socket.send(JSON.stringify({ action: "glass" }))
         }
     }
 
-    toggleBaron() {
-        this.grafImg.visible = !this.grafImg.visible;
+
+    getBaron(): boolean {
+        return this.grafImg.visible;
+    }
+
+    setBaron(b: boolean) {
+        this.grafImg.visible = b;
     }
 
 

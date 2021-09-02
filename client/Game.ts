@@ -23,7 +23,7 @@ export class Game {
         this.socket = socket;
         this.app = app;
         this.background = background;
-        this.socket.onmessage = (e: MessageEvent) => {this.receive(e)};
+        this.socket.onmessage = (e: MessageEvent) => { this.receive(e) };  // TODO: use add listener
 
         app.stage.scale.set(app.view.width / config.width, app.view.height / config.height)
 
@@ -43,6 +43,7 @@ export class Game {
                 const room = this.rooms[roomAliases[i]];
                 room.saveResources(resources);
             }
+            this.socket.send(JSON.stringify({ action: "getstate" }));
         });
 
         this.currentRoom = this.rooms[RoomAlias.UpperHallway];
@@ -65,16 +66,24 @@ export class Game {
                     }
                 });
             });
+
     }
 
-
+    // TODO combine recieve setState?
     receive(msg: MessageEvent<any>) {
         let data = JSON.parse(msg.data)
         console.log(data);
-        if (data.action == "baron"){
+        if (data.action == "baron") {
             let dh = this.rooms[RoomAlias.DiningHall] as DiningHall;
-            dh.toggleBaron();
+            dh.setBaron(data.baron);
+        } else if (data.action == "state") {
+            this.setState(data.state)
         }
+    }
+
+    setState(state: any) {
+        let dh = this.rooms[RoomAlias.DiningHall] as DiningHall;
+        dh.setBaron(state.baron);
     }
 
 
