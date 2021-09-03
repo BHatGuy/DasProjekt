@@ -17,6 +17,7 @@ log.basicConfig(
 class State:
     def __init__(self) -> None:
         self.baron = False
+        self.trapdoor = True
 
 
 clients = set()
@@ -36,9 +37,14 @@ async def main(websocket, path):
             data = json.loads(message)
             if data["action"] == "glass":
                 state.baron = not state.baron
-                await sendall(json.dumps({"action": "baron", "baron": state.baron}))
+            elif data["action"] == "trapdoor":
+                state.trapdoor = False
             elif data["action"] == "getstate":
-                await websocket.send(json.dumps({"action": "state", "state": state.__dict__}))
+                pass
+            elif data["action"] == "reset":
+                state.__init__()
+            await sendall(json.dumps({"action": "state", "state": state.__dict__}))
+
     finally:
         clients.remove(websocket)
         log.info(f"client disconnected {websocket.remote_address}")

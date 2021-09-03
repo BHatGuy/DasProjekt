@@ -72,18 +72,20 @@ export class Game {
     // TODO combine recieve setState?
     receive(msg: MessageEvent<any>) {
         let data = JSON.parse(msg.data)
-        console.log(data);
-        if (data.action == "baron") {
-            let dh = this.rooms[RoomAlias.DiningHall] as DiningHall;
-            dh.setBaron(data.baron);
-        } else if (data.action == "state") {
+        if (data.action == "state") {
             this.setState(data.state)
+        } else {
+            console.log(data);
         }
     }
 
     setState(state: any) {
+        console.log(state);
+
         let dh = this.rooms[RoomAlias.DiningHall] as DiningHall;
+        let lh = this.rooms[RoomAlias.LowerHallway] as LowerHallway;
         dh.setBaron(state.baron);
+        lh.setDoor(state.trapdoor);
     }
 
 

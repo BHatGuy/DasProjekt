@@ -65,8 +65,6 @@ export class LowerHallway extends Room {
 
 
     onclick = (data: PIXI.InteractionData) => {
-        console.log(data);
-
         if (data.target === this.trapdoorBounding) {
             this.game.nextRoom(RoomAlias.Cockpit);
         }
@@ -80,13 +78,22 @@ export class LowerHallway extends Room {
         }
         if (data.target === this.lock) {
             // TODO Ask for code here
-            this.lock.interactive = false;
-            this.stage.removeChild(this.trapdoorClosed);
-            this.stage.addChild(this.trapdoorOpen);
-            this.trapdoorBounding.interactive = true;
+            this.game.socket.send(JSON.stringify({ action: "trapdoor" }))
+
         }
     };
 
+    setDoor(closed: boolean) {
+        this.lock.interactive = closed;
+        this.trapdoorBounding.interactive = !closed;
+        if (!closed) {
+            this.stage.removeChild(this.trapdoorClosed);
+            this.stage.addChild(this.trapdoorOpen);
+        } else {
+            this.stage.addChild(this.trapdoorClosed);
+            this.stage.removeChild(this.trapdoorOpen);
+        }
+    }
 
 
 }
