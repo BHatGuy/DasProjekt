@@ -4,10 +4,10 @@ import * as PIXI from 'pixi.js';
 
 export class Kitchen extends Room {
 
-    door: PIXI.Graphics;
+    door: PIXI.Container;
     plantsStage = new PIXI.Container();
     plants = new PIXI.Sprite();
-    plantsSmall = new PIXI.Graphics();
+    plantsSmall = new PIXI.Container();
     arrow = new PIXI.Sprite();
     reset: PIXI.Container;
 
@@ -15,7 +15,7 @@ export class Kitchen extends Room {
     constructor(game: Game) {
         super(game, game.config.kitchen.img);
 
-        this.door = new PIXI.Graphics();
+        this.door = new PIXI.Container();
         this.door.hitArea = new PIXI.Polygon(game.config.kitchen.door);
         this.door.interactive = true;
         this.door.buttonMode = true;

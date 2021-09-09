@@ -9,9 +9,9 @@ export class DiningHall extends Room {
 
     popup: HTMLCanvasElement | null = null;
     safe: Safe;
-    doorBounding = new PIXI.Graphics();
-    safeBounding = new PIXI.Graphics();
-    glassBounding = new PIXI.Graphics();
+    doorBounding = new PIXI.Container();
+    safeBounding = new PIXI.Container();
+    glassBounding = new PIXI.Container();
     grafImg = new PIXI.Sprite();
 
     constructor(game: Game) {

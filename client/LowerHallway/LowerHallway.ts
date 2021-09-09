@@ -4,13 +4,13 @@ import * as PIXI from 'pixi.js';
 
 export class LowerHallway extends Room {
 
-    trapdoorBounding: PIXI.Graphics;
+    trapdoorBounding: PIXI.Container;
     trapdoorOpen = new PIXI.Sprite();
     trapdoorClosed = new PIXI.Sprite();
-    door1: PIXI.Graphics;
-    door2: PIXI.Graphics;
-    doorUpperHallway: PIXI.Graphics;
-    lock: PIXI.Graphics;
+    door1: PIXI.Container;
+    door2: PIXI.Container;
+    doorUpperHallway: PIXI.Container;
+    lock: PIXI.Container;
 
     constructor(game: Game) {
         super(game, game.config.lowerHallway.img);
@@ -18,31 +18,31 @@ export class LowerHallway extends Room {
         game.app.loader.add("trapdoorOpen", game.config.lowerHallway.trapdoor.open)
         game.app.loader.add("trapdoorClosed", game.config.lowerHallway.trapdoor.closed)
 
-        this.door1 = new PIXI.Graphics();
+        this.door1 = new PIXI.Container();
         this.door1.hitArea = new PIXI.Polygon(game.config.lowerHallway.door1);
         this.door1.interactive = true;
         this.door1.buttonMode = true;
         this.stage.addChild(this.door1);
 
-        this.trapdoorBounding = new PIXI.Graphics();
+        this.trapdoorBounding = new PIXI.Container();
         this.trapdoorBounding.hitArea = new PIXI.Polygon(game.config.lowerHallway.trapdoor.poly);
         this.trapdoorBounding.interactive = false;
         this.trapdoorBounding.buttonMode = true;
         this.stage.addChild(this.trapdoorBounding);
 
-        this.door2 = new PIXI.Graphics();
+        this.door2 = new PIXI.Container();
         this.door2.hitArea = new PIXI.Polygon(game.config.lowerHallway.door2);
         this.door2.interactive = true;
         this.door2.buttonMode = true;
         this.stage.addChild(this.door2);
 
-        this.doorUpperHallway = new PIXI.Graphics();
+        this.doorUpperHallway = new PIXI.Container();
         this.doorUpperHallway.hitArea = new PIXI.Polygon(game.config.lowerHallway.doorUpperHallway);
         this.doorUpperHallway.interactive = true;
         this.doorUpperHallway.buttonMode = true;
         this.stage.addChild(this.doorUpperHallway);
 
-        this.lock = new PIXI.Graphics();
+        this.lock = new PIXI.Container();
         this.lock.hitArea = new PIXI.Polygon(game.config.lowerHallway.trapdoor.lock);
         this.lock.interactive = true;
         this.lock.buttonMode = true;

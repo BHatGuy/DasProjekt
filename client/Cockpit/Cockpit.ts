@@ -6,17 +6,17 @@ import * as PIXI from 'pixi.js';
 export class Cockpit extends Room {
     imgLamp = new PIXI.Sprite();
     lampCycle = 0;
-    ladderBounding: PIXI.Graphics;
-    drawer1Bounding: PIXI.Graphics;
-    drawer2Bounding: PIXI.Graphics;
-    drawer3Bounding: PIXI.Graphics;
+    ladderBounding: PIXI.Container;
+    drawer1Bounding: PIXI.Container;
+    drawer2Bounding: PIXI.Container;
+    drawer3Bounding: PIXI.Container;
 
-    drawer1Open: PIXI.Graphics;
+    drawer1Open: PIXI.Container;
     drawer1 = new PIXI.Sprite();
     drawer2 = new PIXI.Sprite();
     drawer3 = new PIXI.Sprite();
 
-    smallBook: PIXI.Graphics;
+    smallBook: PIXI.Container;
     book = new PIXI.Sprite();
     arrow = new PIXI.Sprite();
     page1: PIXI.Text;
@@ -33,37 +33,37 @@ export class Cockpit extends Room {
             .add("drawer3", game.config.cockpit.drawer3.img)
             .add("book", game.config.cockpit.book.img);
 
-        this.ladderBounding = new PIXI.Graphics();
+        this.ladderBounding = new PIXI.Container();
         this.ladderBounding.hitArea = new PIXI.Polygon(game.config.cockpit.ladder.poly);
         this.ladderBounding.interactive = true;
         this.ladderBounding.buttonMode = true;
         this.ladderBounding.on("click", this.onclick);
 
-        this.drawer1Bounding = new PIXI.Graphics();
+        this.drawer1Bounding = new PIXI.Container();
         this.drawer1Bounding.hitArea = new PIXI.Polygon(game.config.cockpit.drawer1.poly);
         this.drawer1Bounding.interactive = true;
         this.drawer1Bounding.buttonMode = true;
         this.drawer1Bounding.on("click", this.onclick);
 
-        this.drawer2Bounding = new PIXI.Graphics();
+        this.drawer2Bounding = new PIXI.Container();
         this.drawer2Bounding.hitArea = new PIXI.Polygon(game.config.cockpit.drawer2.poly);
         this.drawer2Bounding.interactive = true;
         this.drawer2Bounding.buttonMode = true;
         this.drawer2Bounding.on("click", this.onclick);
 
-        this.drawer3Bounding = new PIXI.Graphics();
+        this.drawer3Bounding = new PIXI.Container();
         this.drawer3Bounding.hitArea = new PIXI.Polygon(game.config.cockpit.drawer3.poly);
         this.drawer3Bounding.interactive = true;
         this.drawer3Bounding.buttonMode = true;
         this.drawer3Bounding.on("click", this.onclick);
 
-        this.drawer1Open = new PIXI.Graphics();
+        this.drawer1Open = new PIXI.Container();
         this.drawer1Open.hitArea = new PIXI.Polygon(this.game.config.cockpit.drawer1.open);
         this.drawer1Open.interactive = true;
         this.drawer1Open.buttonMode = true;
         this.drawer1Open.on("click", this.onclick);
 
-        this.smallBook = new PIXI.Graphics();
+        this.smallBook = new PIXI.Container();
         this.smallBook.hitArea = new PIXI.Polygon(game.config.cockpit.book.small);
         this.smallBook.interactive = true;
         this.smallBook.buttonMode = true;

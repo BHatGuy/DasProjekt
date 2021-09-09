@@ -11,7 +11,7 @@ export class Safe {
     imgIndicator = new PIXI.Sprite();
     imgSurprise = new PIXI.Sprite();
     arrow = new PIXI.Sprite();
-    arrowBounding = new PIXI.Graphics();
+    arrowBounding = new PIXI.Container();
     angles = [this.digitToAngle(0), this.digitToAngle(0), this.digitToAngle(0)];
     goals = [this.digitToAngle(0), this.digitToAngle(0), this.digitToAngle(0)];
     combi = [0, 0, 0];

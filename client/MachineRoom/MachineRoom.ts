@@ -5,14 +5,14 @@ import * as PIXI from 'pixi.js';
 
 export class MachineRoom extends Room {
 
-    doorBounding: PIXI.Graphics;
+    doorBounding: PIXI.Container;
     mechanic = new PIXI.Sprite();
     animation: PIXI.AnimatedSprite | null = null;
 
 
     constructor(game: Game) {
         super(game, game.config.machineRoom.img);
-        this.doorBounding = new PIXI.Graphics();
+        this.doorBounding = new PIXI.Container();
         this.doorBounding.hitArea = new PIXI.Polygon(game.config.machineRoom.door);
         this.doorBounding.interactive = true;
         this.doorBounding.buttonMode = true;
