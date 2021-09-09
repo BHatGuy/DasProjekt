@@ -9,6 +9,7 @@ export class Kitchen extends Room {
     plants = new PIXI.Sprite();
     plantsSmall = new PIXI.Graphics();
     arrow = new PIXI.Sprite();
+    reset: PIXI.Container;
 
 
     constructor(game: Game) {
@@ -19,12 +20,21 @@ export class Kitchen extends Room {
         this.door.interactive = true;
         this.door.buttonMode = true;
         this.door.on("click", this.onclick);
-        this.stage.addChild(this.door);
+
         this.plantsSmall.hitArea = new PIXI.Polygon(this.game.config.kitchen.plants.poly);
         this.plantsSmall.interactive = true;
         this.plantsSmall.buttonMode = true;
         this.plantsSmall.on("click", this.onclick);
+
+        this.reset = new PIXI.Container();
+        this.reset.hitArea = new PIXI.Polygon(this.game.config.kitchen.jar);
+        this.reset.interactive = true;
+        this.reset.on("click", this.onclick);
+
         game.app.loader.add("plants", game.config.kitchen.plants.img);
+
+        this.stage.addChild(this.door, this.reset);
+
     }
 
     saveResources(resources: any) {
@@ -50,9 +60,11 @@ export class Kitchen extends Room {
         } else if (data.target === this.plantsSmall) {
             this.stage.interactiveChildren = false;
             this.game.app.stage.addChild(this.plantsStage);
-        } else if (data.target == this.arrow) {
+        } else if (data.target === this.arrow) {
             this.stage.interactiveChildren = true;
             this.game.app.stage.removeChild(this.plantsStage);
+        } else if (data.target == this.reset) {
+            this.game.socket.send(JSON.stringify({ action: "reset" }))
         }
     };
 }
