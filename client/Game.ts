@@ -37,17 +37,38 @@ export class Game {
         }
         app.loader.add("arrow", config.ui.arrow.img);
 
+        let graphics = new PIXI.Graphics();
+        let style = new PIXI.TextStyle({
+            fontFamily: "Arial",
+            fontSize: 64,
+            fill: 0xffffff,
+        });
+        let loadingText = new PIXI.Text(config.loadingText, style);
+        loadingText.position.set(config.width / 2 - loadingText.width / 2, config.height / 2 - 91);
+        app.stage.addChild(graphics, loadingText);
+
+        app.loader.onProgress.add((loader) => {
+            graphics.lineStyle({ width: 2, color: 0xffffff });
+            graphics.drawRect(64, config.height / 2, (config.width - 128), 64);
+            graphics.beginFill(0xffffff);
+            graphics.drawRect(64, config.height / 2, (config.width - 128) * loader.progress / 100, 64);
+            graphics.endFill();
+        });
+
+        this.currentRoom = this.rooms[RoomAlias.UpperHallway];
+
         app.loader.load((loader, resources) => {
             // TODO: do this more elegant
             for (let i = 0; i < roomAliases.length; i++) {
                 const room = this.rooms[roomAliases[i]];
                 room.saveResources(resources);
             }
+            this.app.stage.removeChild(graphics, loadingText);
+            this.currentRoom.activate();
             this.socket.send(JSON.stringify({ action: "getstate" }));
         });
 
-        this.currentRoom = this.rooms[RoomAlias.UpperHallway];
-        this.currentRoom.activate();
+
 
         // Animated Background:
         background.stage.scale.set(background.view.height / config.height);
