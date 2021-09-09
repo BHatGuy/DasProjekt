@@ -38,6 +38,8 @@ export class Game {
         app.loader.add("arrow", config.ui.arrow.img);
 
         let graphics = new PIXI.Graphics();
+        graphics.lineStyle({ width: 2, color: 0xffffff });
+        graphics.drawRect(64, config.height / 2, (config.width - 128), 64);
         let style = new PIXI.TextStyle({
             fontFamily: "Arial",
             fontSize: 64,
@@ -48,8 +50,6 @@ export class Game {
         app.stage.addChild(graphics, loadingText);
 
         app.loader.onProgress.add((loader) => {
-            graphics.lineStyle({ width: 2, color: 0xffffff });
-            graphics.drawRect(64, config.height / 2, (config.width - 128), 64);
             graphics.beginFill(0xffffff);
             graphics.drawRect(64, config.height / 2, (config.width - 128) * loader.progress / 100, 64);
             graphics.endFill();
